@@ -1,0 +1,40 @@
+2024-10-20 11:24:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "STUDEN" not found; SQL statement:
+SELECT * FROM STUDEN [42102-214]
+2024-10-20 11:26:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM [*]*"; expected "identifier"; SQL statement:
+SELECT * FROM * [42001-214]
+2024-10-20 13:36:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid))"; expected "identifier"; SQL statement:
+create table user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid)) [42001-214]
+2024-10-20 13:37:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid))"; expected "identifier"; SQL statement:
+create table user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid)) [42001-214]
+2024-10-20 13:38:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM [*]USER"; expected "identifier"; SQL statement:
+SELECT * FROM USER [42001-214]
+2024-10-20 13:39:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid))"; expected "identifier"; SQL statement:
+create table user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid)) [42001-214]
+2024-10-20 13:43:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid))"; expected "identifier"; SQL statement:
+create table user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid)) [42001-214]
+2024-10-20 13:43:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid))"; expected "identifier"; SQL statement:
+create table user (user_type varchar(31) not null, useruid bigint not null, user_name varchar(255), user_password varchar(255), primary key (useruid)) [42001-214]
+2024-10-20 13:50:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT  * FROM USERS\000d\000aSHOW [*]TABLES"; SQL statement:
+SELECT  * FROM USERS
+SHOW TABLES [42000-214]
+2024-10-20 13:50:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT  * FROM USERS\000d\000aSHOW [*]TABLES"; SQL statement:
+SELECT  * FROM USERS
+SHOW TABLES [42000-214]
+2024-10-20 13:51:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE STUDENT\000d\000a[*]DROP TABLE PROFESSOR\000d\000aDROP TABLE ADMINISTRATOR"; SQL statement:
+DROP TABLE STUDENT
+DROP TABLE PROFESSOR
+DROP TABLE ADMINISTRATOR [42000-214]
+2024-10-20 13:57:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (user_name,user_password,user_type,useruid) values (?,?,'Student',?) [42104-214]
