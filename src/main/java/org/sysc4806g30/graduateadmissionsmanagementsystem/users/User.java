@@ -19,7 +19,7 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long userUID;
-    protected String userName,userPassword;
+    protected String userName,userPassword,eMail;
 
     public long getUserUID() {
         return userUID;
@@ -35,6 +35,12 @@ public abstract class User {
     }
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+    public String geteMail() {
+        return eMail;
+    }
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
     }
 }
 //curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Ruangfafa\",\"userPassword\":\"332335\",\"user_type\":\"student\"}"
