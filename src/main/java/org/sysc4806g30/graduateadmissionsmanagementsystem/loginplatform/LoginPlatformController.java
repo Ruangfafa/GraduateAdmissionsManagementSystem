@@ -1,14 +1,21 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.loginplatform;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+//@RestController
 @RequestMapping("/login")
 public class LoginPlatformController {
 
     @Autowired
     private LoginPlatform loginPlatform;
+
+    @GetMapping
+    public String showLoginPage() {
+        return "login";
+    }
 
     @PostMapping
     public String login(@RequestBody LoginRequest loginRequest) {
@@ -20,5 +27,4 @@ public class LoginPlatformController {
             return "Invalid username or password!";
         }
     }
-
 }
