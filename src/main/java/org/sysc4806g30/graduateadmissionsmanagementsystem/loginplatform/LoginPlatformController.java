@@ -1,16 +1,24 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.loginplatform;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+//@RestController
 @RequestMapping("/login")
 public class LoginPlatformController {
 
     @Autowired
     private LoginPlatform loginPlatform;
 
-    @PostMapping
+    @GetMapping
+    public String showLoginPage() {
+        return "login";
+    }
+
+    @PostMapping(consumes = "application/json")
+    @ResponseBody
     public String login(@RequestBody LoginRequest loginRequest) {
         if (loginPlatform.authenticate(loginRequest.getUsername(), loginRequest.getPassword())) {
             System.out.println("Login Successful");
@@ -20,5 +28,4 @@ public class LoginPlatformController {
             return "Invalid username or password!";
         }
     }
-
 }
