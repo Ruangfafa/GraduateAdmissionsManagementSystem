@@ -1,5 +1,6 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.loginplatform;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,8 @@ public class LoginPlatformController {
         return "login";
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
+    @ResponseBody
     public String login(@RequestBody LoginRequest loginRequest) {
         if (loginPlatform.authenticate(loginRequest.getUsername(), loginRequest.getPassword())) {
             System.out.println("Login Successful");
