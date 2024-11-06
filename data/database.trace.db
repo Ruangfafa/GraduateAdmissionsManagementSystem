@@ -38,3 +38,12 @@ DROP TABLE ADMINISTRATOR [42000-214]
 2024-10-20 13:57:06 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
 insert into users (user_name,user_password,user_type,useruid) values (?,?,'Student',?) [42104-214]
+2024-11-06 10:17:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SHOW TABLES[*]；"; SQL statement:
+SHOW TABLES； [42000-214]
+2024-11-06 10:18:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SHOW TABLE[*]；"; SQL statement:
+SHOW TABLE； [42000-214]
+2024-11-06 10:19:01 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+SELECT * FROM USERS [42104-214]
