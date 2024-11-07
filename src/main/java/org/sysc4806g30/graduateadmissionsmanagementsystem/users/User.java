@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "USERS")  // Changed table name to "users"
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -27,7 +28,7 @@ public abstract class User {
     @Column(name = "EMAIL") // 将 eMail 重命名为 E_MAIL
     protected String eMail;
 
-    public long getUserUID() {
+    public Long getUserUID() {
         return userUID;
     }
     public String getUserName() {

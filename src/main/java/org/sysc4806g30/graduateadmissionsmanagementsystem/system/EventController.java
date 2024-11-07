@@ -2,7 +2,6 @@ package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class EventController {
     private ApplicationRepository applicationRepository;
 
     @Autowired
-    private MajorRepository majorRepository;
+    private ProfProfileRepository profProfileRepository;
 
     // 获取特定用户参与的事件列表
     @GetMapping("/{userType}/{userUID}")
@@ -43,11 +42,11 @@ public class EventController {
             return eventIDs;
         }
         else if (userType.equals("prof")){
-            List<Major> allMajors = majorRepository.findByProfUID(userUID);
+            List<ProfProfile> allProfProfiles = profProfileRepository.findByProfUID(userUID);
 
             ArrayList<Long> eventIDs = new ArrayList<>();
-            for (Major major : allMajors) {
-                Long tempEventUID = major.getEventUID();
+            for (ProfProfile profProfile : allProfProfiles) {
+                Long tempEventUID = profProfile.getEventUID();
                 if (!eventIDs.contains(tempEventUID)) eventIDs.add(tempEventUID);
             }
             return eventIDs;
