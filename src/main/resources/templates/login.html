@@ -5,17 +5,20 @@
     <title>System Login</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="./loginPageController.js"></script>
+    <link rel="stylesheet" th:href="@{/loginPageStyle.css}">
 </head>
 <body>
+<div class="title-container">
     <h1>Graduate Admissions Management System Login Page</h1>
-    <div>
-        <fieldset>
-            <label for="userName">User Name:</label>
-            <input type="text" id="userName" name="userName"><br><br>
-            <label for="password">Password:</label>
-            <input type="text" id="password" name="password"><br><br>
-            <input type="submit" value="Login" onclick="checkLogin(userName)">
-        </fieldset>
-    </div>
+</div>
+<div class="form-container">
+    <fieldset>
+        <label for="userName">User Name</label>
+        <input type="text" id="userName" name="userName"><br><br>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Login" onclick="checkLogin()">
+    </fieldset>
+</div>
 </body>
 </html>
