@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - GAMS
+name: Build and deploy JAR app to Azure Web App - gams
 
 on:
   push:
@@ -49,15 +49,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_47BDFB16BA71424C849B3E0EE17CAFB6 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2A363A7B3A5148DCADE6B450DA11E6E6 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A6EE0C9BBB6340DD9BDF741748524E41 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DEB9A189C6A54042B34D3F369D47FF51 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C1F2221E30C54460A3763DBECC064250 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E6BA25552BC741E99BFC914BFD1B0C58 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'GAMS'
+          app-name: 'gams'
           slot-name: 'Production'
           package: '*.jar'
           
