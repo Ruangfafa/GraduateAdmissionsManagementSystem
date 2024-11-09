@@ -17,7 +17,7 @@ The Graduate Admissions Management System (GAMS) is a web application designed t
 
 - Java 17
 - Maven (for local builds)
-- Azure account** (for deployment)
+- Azure account (for deployment)
 
 ## Contributors
 
