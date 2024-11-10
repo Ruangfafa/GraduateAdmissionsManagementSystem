@@ -1,28 +1,58 @@
-name: Deploy to S3
+name: Build and deploy JAR app to AWS Elastic Beanstalk
 
 on:
   push:
     branches:
       - Group-Presentation
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3 
+      - uses: actions/checkout@v4
 
-      - name: Build project
+      - name: Set up Java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-app
+          path: '${{ github.workspace }}/target/*.jar'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: java-app
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload JAR to S3
         run: |
+          aws s3 cp *.jar s3://${{ secrets.S3_BUCKET_NAME }}/java-app.jar
 
-          npm install
-          npm run build
-
-      - name: Upload to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
+      - name: Deploy to Elastic Beanstalk
         run: |
-          aws s3 sync ./dist s3://ruangfafa-bucket --delete
+          aws elasticbeanstalk create-application-version --application-name ${{ secrets.EB_APP_NAME }} \
+            --version-label "${{ github.sha }}" --source-bundle S3Bucket=${{ secrets.S3_BUCKET_NAME }},S3Key=java-app.jar
+
+          aws elasticbeanstalk update-environment --environment-name ${{ secrets.EB_ENV_NAME }} \
+            --version-label "${{ github.sha }}"
