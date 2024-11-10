@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-The Graduate Admissions Management System (GAMS) is a web application designed to allow applicants to submit their files including personal info, research field and various documents. The professors can submit their profiles specifying their research fields. The  applicants to submit applications, professors to review submissions, and administrators to make admissions decisions. This project is built with Spring Boot, H2 Database, and deployed on Azure.
+The Graduate Admissions Management System (GAMS) is a web application designed to allow applicants to submit their files including personal info, research field and various documents. The professors can submit their profiles specifying their research fields. The  applicants to submit applications, professors to review submissions, and administrators to make admissions decisions. This project is built with Spring Boot, AWS MySQL Database, and deployed on Azure.
 
 ## Features
 
