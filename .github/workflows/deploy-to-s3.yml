@@ -3,7 +3,7 @@ name: Build and deploy JAR app to AWS Elastic Beanstalk
 on:
   push:
     branches:
-      - master
+      - Group-Presentation
   workflow_dispatch:
 
 jobs:
