@@ -1,6 +1,6 @@
 # Graduate Admissions Management System (GAMS)
 
-[![Java CI with Maven](https://github.com/Ruangfafa/GraduateAdmissionsManagementSystem/actions/workflows/maven.yml/badge.svg)](https://github.com/Ruangfafa/GraduateAdmissionsManagementSystem/actions/workflows/maven.yml)
+[[Java CI with Maven]](https://github.com/users/Ruangfafa/projects/1)
 
 ## Project Overview
 
