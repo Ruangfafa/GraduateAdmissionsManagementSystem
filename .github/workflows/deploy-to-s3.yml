@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: 'target/*.jar'   # 确保 Maven 输出的 JAR 文件在 target 目录中
           
   deploy:
     runs-on: ubuntu-latest
@@ -37,6 +37,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
+          path: .
+
+      - name: List files in current directory  # 列出文件，确保下载的工件存在
+        run: ls -al
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -47,7 +51,7 @@ jobs:
 
       - name: Upload JAR to S3
         run: |
-          aws s3 cp java-app.jar s3://${{ secrets.S3_BUCKET_NAME }}/java-app.jar
+          aws s3 cp ./*.jar s3://${{ secrets.S3_BUCKET_NAME }}/java-app.jar
 
       - name: Deploy to Elastic Beanstalk
         run: |
