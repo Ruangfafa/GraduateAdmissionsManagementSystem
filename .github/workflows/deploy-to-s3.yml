@@ -24,4 +24,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
         run: |
-          aws s3 sync ./path/to/build s3://my-github-project-bucket --delete
+          aws s3 sync ./dist s3://ruangfafa-bucket --delete
