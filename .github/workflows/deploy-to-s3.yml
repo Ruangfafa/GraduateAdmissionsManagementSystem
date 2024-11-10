@@ -47,7 +47,7 @@ jobs:
 
       - name: Upload JAR to S3
         run: |
-          aws s3 cp *.jar s3://${{ secrets.S3_BUCKET_NAME }}/java-app.jar
+          aws s3 cp java-app.jar s3://${{ secrets.S3_BUCKET_NAME }}/java-app.jar
 
       - name: Deploy to Elastic Beanstalk
         run: |
