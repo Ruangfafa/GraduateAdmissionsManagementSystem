@@ -1,36 +1,32 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.UserRepository;
 
-import java.util.Properties;
-
+@Service
 public class MailingSystem {
-    public static void main(String[] args) {
+    @Autowired
+    private JavaMailSender mailSender;
 
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("ruangfafa.mao@gmail.com");
-        mailSender.setPassword("ezhf felu uyge ecyt");
+    @Autowired
+    private UserRepository userRepository;
 
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true"); // 可选，用于调试
-
-
+    public void sendEmail(Long userSendTo, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("ruangfafa.mao@gmail.com"); // 设置发件人邮箱地址
-        message.setTo("clksdysjsh0317@gmail.com");
-        message.setSubject("Notification");
-        message.setText("Test Text");
 
-
+        message.setTo(getUserEmailById(userSendTo));
+        message.setSubject(subject);
+        message.setText(body);
         mailSender.send(message);
-        System.out.println("Email sent successfully.");
+    }
+
+    @GetMapping
+    private String getUserEmailById(@RequestParam("USERUID") long userUID) {
+        return  userRepository.findById(userUID).geteMail();
     }
 }
