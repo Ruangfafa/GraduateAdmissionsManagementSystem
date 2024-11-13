@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - GraduateAdmissionsManagementSystem
+name: Build and deploy JAR app to Azure Web App - gams
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'microsoft'
 
       - name: Build with Maven
@@ -32,14 +32,14 @@ jobs:
           path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-
+  
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -49,15 +49,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3A35B97D665C4415A6F08D2824C92930 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_973FDB2B2D884CD388EE4C91D95C3363 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4C56012E60DD43E7AAED3FEBD040D71D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FF91440A76CA425CB3B8EF3E47AA73D1 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F417974A9FC241B39F595F7C1F6CBDDA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C4ECCF06EB5840AE91F055C0A81DF57B }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'GraduateAdmissionsManagementSystem'
+          app-name: 'gams'
           slot-name: 'Production'
           package: '*.jar'
           

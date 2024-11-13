@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.users.User;
 
 @Controller
-//@RestController
 @RequestMapping("/login")
 public class LoginPlatformController {
 
