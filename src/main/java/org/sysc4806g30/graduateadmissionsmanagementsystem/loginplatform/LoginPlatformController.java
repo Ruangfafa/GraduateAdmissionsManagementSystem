@@ -25,7 +25,7 @@ public class LoginPlatformController {
         if (user != null) {
             String userType = user.getClass().getSimpleName().toLowerCase();
             long userUID = user.getUserUID();
-            return "redirect:/" + userType + "/" + userUID; // 重定向到对应URL
+            return "redirect:/" + userType + "/" + userUID;
         } else {
             return "Invalid username or password!";
         }

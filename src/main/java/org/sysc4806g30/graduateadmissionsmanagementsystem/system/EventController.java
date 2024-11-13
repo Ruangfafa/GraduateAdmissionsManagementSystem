@@ -20,7 +20,6 @@ public class EventController {
     @Autowired
     private ProfProfileRepository profProfileRepository;
 
-    // 获取特定用户参与的事件列表
     @GetMapping("/{userType}/{userUID}")
     public ArrayList<Long> getUserEvents(@PathVariable String userType, @PathVariable Long userUID) {
         if (userType.equals("std")){

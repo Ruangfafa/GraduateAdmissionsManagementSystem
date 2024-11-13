@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "USERS")  // Changed table name to "users"
+@Table(name = "USERS")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "USERTYPE", discriminatorType = DiscriminatorType.STRING)
 
@@ -21,11 +21,11 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USERUID")
     protected long userUID;
-    @Column(name = "USERNAME") // 将 userName 重命名为 USER_NAME
+    @Column(name = "USERNAME")
     protected String userName;
-    @Column(name = "USERPASSWORD") // 将 userPassword 重命名为 USER_PASSWORD
+    @Column(name = "USERPASSWORD")
     protected String userPassword;
-    @Column(name = "EMAIL") // 将 eMail 重命名为 E_MAIL
+    @Column(name = "EMAIL")
     protected String eMail;
 
     public Long getUserUID() {
