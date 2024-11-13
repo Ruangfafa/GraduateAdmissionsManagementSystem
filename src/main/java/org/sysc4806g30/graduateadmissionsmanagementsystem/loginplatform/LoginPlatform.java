@@ -11,11 +11,11 @@ public class LoginPlatform {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticate(String username, String password) {
+    public User authenticate(String username, String password) {
         User user = userRepository.findByUserName(username);
-        if (user != null) {
-            return user.getUserPassword().equals(password);
+        if (user != null && user.getUserPassword().equals(password)) {
+            return user;
         }
-        return false;
+        return null;
     }
 }
