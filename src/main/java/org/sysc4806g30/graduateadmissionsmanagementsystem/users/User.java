@@ -14,7 +14,7 @@ import jakarta.persistence.*;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Student.class, name = "STD"),
         @JsonSubTypes.Type(value = Professor.class, name = "PROF"),
-        @JsonSubTypes.Type(value = Administrator.class, name = "ADMIN")
+        @JsonSubTypes.Type(value = Admin.class, name = "ADMIN")
 })
 public abstract class User {
     @Id
@@ -51,4 +51,5 @@ public abstract class User {
     }
 }
 //curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Ruangfafa\",\"userPassword\":\"332335\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
-//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Rossa\",\"userPassword\":\"000000\",\"USERTYPE\":\"PROF\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Rossa\",\"userPassword\":\"000000\",\"USERTYPE\":\"PROF\",\"eMail\":\"rossaExample@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Admin#1\",\"userPassword\":\"123456\",\"USERTYPE\":\"ADMIN\"}"
