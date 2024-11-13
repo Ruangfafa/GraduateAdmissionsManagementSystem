@@ -17,8 +17,6 @@ public class Event {
     private String durations;
     @Column(name = "INFO")
     private String info;
-    @Column(name = "PROFS")
-    private String profs;
     public void setEventUID(Long eventUID) {
         this.eventUID = eventUID;
     }

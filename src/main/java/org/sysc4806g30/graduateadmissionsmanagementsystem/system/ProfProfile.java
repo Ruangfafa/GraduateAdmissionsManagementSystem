@@ -17,6 +17,10 @@ public class ProfProfile {
     private Long eventUID;
     @Column(name = "INFO")
     private String info;
+    @Column(name = "ASSIGNEDSTDUIDLIST")
+    private String assignedstduidlist;
+    @Column(name = "FINALSTDLIST")
+    private String finalstdlist;
 
 
 

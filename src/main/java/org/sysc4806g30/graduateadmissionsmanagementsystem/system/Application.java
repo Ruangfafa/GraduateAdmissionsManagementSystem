@@ -1,6 +1,7 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 
 import jakarta.persistence.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.enums.PROFCOMMENT;
 
 @Entity
 @Table(name = "APPLICATIONS")
@@ -21,6 +22,8 @@ public class Application {
     private Long eventUID;
     @Column(name = "DESPROF")
     private String desireProfessors;
+    @Column(name = "PROFCOMMENT")
+    private PROFCOMMENT profcomment;
 
     public Long getEventUID() {
         return eventUID;
