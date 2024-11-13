@@ -55,4 +55,7 @@ public class EventController {
         }
     }
 
+    @PostMapping
+    @ResponseBody
+    public Event createEvent(@RequestBody Event event) {return eventRepository.save(event);}
 }
