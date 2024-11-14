@@ -1,22 +1,24 @@
-
-function checkLogin(name){
+function checkLogin(name) {
     $.ajax({
         url: '/login',
-        type:'POST',
+        type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
             username: $("#userName").val(),
             password: $("#password").val()
         }),
-        success: function (data){
-            alert(data);
-            // Set input fields back to empty
+        success: function (data) {
+            if (data) {
+                window.location.href = data;
+            } else
+                alert("Invalid username or password!");
+
             $("#userName").val("");
             $("#password").val("");
         },
-        error: function (){
+        error: function () {
             console.log('Error ${error}');
-            alert("Login Error!")
+            alert("Login Error!");
         }
     });
 }
