@@ -1,30 +1,45 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/prof")
 public class ProfProfileController {
+    private final ProfProfileService profProfileService;
+    private static final Logger logger = LoggerFactory.getLogger(ProfProfileController.class);
+
     @Autowired
-    private ProfProfileService profProfileService;
+    public ProfProfileController(ProfProfileService profProfileService) {
+        this.profProfileService = profProfileService;
+    }
 
     @PostMapping("/{profUID}/profevent/{eventUID}")
-    public @ResponseBody ProfProfile createProfProfile(@PathVariable Long profUID, @PathVariable Long eventUID, @RequestBody ProfProfile profProfile) {
+    @ResponseBody
+    public ProfProfile createProfProfile(
+            @PathVariable Long profUID,
+            @PathVariable Long eventUID,
+            @RequestBody ProfProfile profProfile) {
+
         profProfile.setProfUID(profUID);
         profProfile.setEventUID(eventUID);
-        return profProfileService.saveProfProfile(profProfile);
+
+        ProfProfile saved = profProfileService.saveProfProfile(profProfile);
+        return saved;
     }
 
     @GetMapping("/{profUID}/profevent/{eventUID}")
-    public @ResponseBody List<ProfProfile> getProfProfilesByProfUIDAndEventUID(@PathVariable Long profUID, @PathVariable Long eventUID) {
-        return profProfileService.getProfProfilesByProfUID(profUID).stream()
-                .filter(profile -> profile.getEventUID().equals(eventUID))
-                .toList();
+    public String getProfProfilePage() {
+        return "prof";
     }
 
     @GetMapping("/{profUID}")
@@ -32,13 +47,17 @@ public class ProfProfileController {
         return profProfileService.getProfProfilesByProfUID(profUID);
     }
 
-    @GetMapping
+    @GetMapping("/{profUID}/profevent/{eventUID}/data")
+    public @ResponseBody List<ProfProfile> getProfProfilesByProfUIDAndEventUID(
+            @PathVariable Long profUID,
+            @PathVariable Long eventUID) {
+        return profProfileService.getProfProfilesByProfUIDAndEventUID(profUID, eventUID);
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
     public List<ProfProfile> getAllProfProfiles() {
         return profProfileService.getAllProfProfiles();
     }
 
-    @GetMapping("/profProfilePage")
-    public String getProfProfilePage() {
-        return "prof";
-    }
 }

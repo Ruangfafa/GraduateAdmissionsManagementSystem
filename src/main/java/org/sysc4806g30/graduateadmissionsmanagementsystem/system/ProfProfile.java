@@ -22,6 +22,8 @@ public class ProfProfile {
     @Column(name = "FINALSTDLIST")
     private String finalstdlist;
 
+    public ProfProfile() {}
+
 
 
     public Long getEventUID() {
