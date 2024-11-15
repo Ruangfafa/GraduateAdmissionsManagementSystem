@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Professor Profile Management</title>
+
+</head>
+<body>
+<div class="container">
+  <h2>Professor Profile Form</h2>
+  <div id="currentContext"></div>
+  <form id="profProfileForm">
+    <div class="form-group">
+      <label for="research">Research:</label>
+      <input type="text" id="research" name="research" required>
+    </div>
+    <div class="form-group">
+      <label for="info">Info:</label>
+      <textarea id="info" name="info"></textarea>
+    </div>
+    <button type="submit">Submit Profile</button>
+  </form>
+
+  <div id="profilesList"></div>
+</div>
+
+<script>
+  // Extract profUID and eventUID from URL
+  const pathSegments = window.location.pathname.split('/');
+  const profUID = pathSegments[pathSegments.indexOf('prof') + 1];
+  const eventUID = pathSegments[pathSegments.indexOf('profevent') + 1];
+
+  // Display current context
+  document.getElementById('currentContext').innerHTML = `
+            <p><strong>Professor UID:</strong> ${profUID}</p>
+            <p><strong>Event UID:</strong> ${eventUID}</p>
+        `;
+
+  document.getElementById('profProfileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      profUID: parseInt(profUID),
+      eventUID: parseInt(eventUID),
+      research: document.getElementById('research').value,
+      info: document.getElementById('info').value,
+    };
+
+    try {
+      const response = await fetch(`/prof/${profUID}/profevent/${eventUID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        alert('Profile submitted successfully!');
+        loadProfiles();
+        // Clear form
+        document.getElementById('profProfileForm').reset();
+      } else {
+        const errorData = await response.json();
+        alert(`Error submitting profile: ${errorData.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error submitting profile');
+    }
+  });
+
+  async function loadProfiles() {
+    try {
+      const response = await fetch(`/prof/${profUID}/profevent/${eventUID}/data`);
+      const profiles = await response.json();
+
+      const profilesList = document.getElementById('profilesList');
+      profilesList.innerHTML = '<h3>Existing Profiles</h3>';
+
+      if (profiles.length === 0) {
+        profilesList.innerHTML += '<p>No profiles found for this professor and event.</p>';
+        return;
+      }
+
+      profiles.forEach(profile => {
+        profilesList.innerHTML += `
+                        <div class="profile">
+                            <p><strong>Profile UID:</strong> ${profile.profProfileUID}</p>
+                            <p><strong>Research:</strong> ${profile.research || 'N/A'}</p>
+                            <p><strong>Info:</strong> ${profile.info || 'N/A'}</p>
+                            <p><strong>Assigned Students:</strong> ${profile.assignedstduidlist || 'None'}</p>
+                            <p><strong>Final List:</strong> ${profile.finalstdlist || 'None'}</p>
+                        </div>
+                    `;
+      });
+    } catch (error) {
+      console.error('Error loading profiles:', error);
+      document.getElementById('profilesList').innerHTML =
+              '<p class="error">Error loading profiles. Please try again later.</p>';
+    }
+  }
+
+  // Load existing profiles when page loads
+  loadProfiles();
+</script>
+</body>
+</html>
+
+
+
+
