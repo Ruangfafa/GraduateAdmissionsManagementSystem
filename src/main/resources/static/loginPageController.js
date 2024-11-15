@@ -1,4 +1,4 @@
-function checkLogin(name) {
+function checkLogin() {
     $.ajax({
         url: '/login',
         type: 'POST',
