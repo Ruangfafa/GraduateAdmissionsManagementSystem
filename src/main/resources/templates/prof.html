@@ -46,7 +46,7 @@
     };
 
     try {
-      const response = await fetch(`/prof/${profUID}/profevent/${eventUID}`, {
+      const response = await fetch(`/professor/${profUID}/profevent/${eventUID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -71,7 +71,7 @@
 
   async function loadProfiles() {
     try {
-      const response = await fetch(`/prof/${profUID}/profevent/${eventUID}/data`);
+      const response = await fetch(`/professor/${profUID}/profevent/${eventUID}/data`);
       const profiles = await response.json();
 
       const profilesList = document.getElementById('profilesList');

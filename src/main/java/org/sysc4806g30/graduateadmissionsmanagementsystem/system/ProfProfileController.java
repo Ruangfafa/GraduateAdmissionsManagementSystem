@@ -39,7 +39,7 @@ public class ProfProfileController {
 
     @GetMapping("/{profUID}/profevent/{eventUID}")
     public String getProfProfilePage() {
-        return "prof";
+        return "professor";
     }
 
     @GetMapping("/{profUID}")
