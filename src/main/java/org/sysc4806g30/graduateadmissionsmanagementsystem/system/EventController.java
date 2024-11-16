@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +22,16 @@ public class EventController {
     @Autowired
     private ProfProfileRepository profProfileRepository;
 
-    @GetMapping("/{userType}/{userUID}")
+    @GetMapping("/{userType}/{userUID}/api/eventList")
     @ResponseBody
     public ArrayList<Long> getUserEvents(@PathVariable String userType, @PathVariable Long userUID) {
         if (userType.equals("std")){
             List<Application> applications = applicationRepository.findByUserUID(userUID);
 
             ArrayList<Long> eventIDs = new ArrayList<>();
+            for (Long eventID : activeEvents()){
+                eventIDs.add(eventID);
+            }
             for (Application application : applications) {
                 Long tempEventUID = application.getEventUID();
                 if (!eventIDs.contains(tempEventUID)) eventIDs.add(tempEventUID);
@@ -40,7 +46,7 @@ public class EventController {
             }
             return eventIDs;
         }
-        else if (userType.equals("prof")){
+        else if (userType.equals("professor")){
             List<ProfProfile> allProfProfiles = profProfileRepository.findByProfUID(userUID);
 
             ArrayList<Long> eventIDs = new ArrayList<>();
@@ -58,7 +64,22 @@ public class EventController {
     @PostMapping("/admin/{uid}")
     @ResponseBody
     public Event createEvent(@RequestBody Event event, @PathVariable Long uid) {
-        System.out.println("Received Event Info: " + event.getInfo());
         return eventRepository.save(event);
+    }
+
+
+    private ArrayList<Long> activeEvents(){
+        ArrayList<Long> eventIDs = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        List<Event> events = eventRepository.findAll();
+        for (Event event : events) {
+            LocalDate initDate = event.getInitDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            long duration = event.getDur1()+event.getDur2()+event.getDur3()+event.getDur4()+event.getDur5();
+            long daysBetween = ChronoUnit.DAYS.between(initDate, currentDate);
+            if (daysBetween >= 0 && daysBetween <= duration) {
+                eventIDs.add(event.getEventUID());
+            }
+        }
+        return eventIDs;
     }
 }

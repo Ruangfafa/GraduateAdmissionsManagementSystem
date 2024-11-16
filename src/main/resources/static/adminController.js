@@ -53,13 +53,17 @@ function createNewEvent() {
         return;
     }
 
-    const duration = `${duration1},${duration2},${duration3},${duration4},${duration5}`;
-
     const eventData = {
         initDate: initDate,
-        durations: duration,
-        info: title + "%" + description
+        dur1: parseInt(duration1),
+        dur2: parseInt(duration2),
+        dur3: parseInt(duration3),
+        dur4: parseInt(duration4),
+        dur5: parseInt(duration5),
+        title: title,
+        description: description
     };
+
 
     $.ajax({
         url: `/admin/${uid}`,
