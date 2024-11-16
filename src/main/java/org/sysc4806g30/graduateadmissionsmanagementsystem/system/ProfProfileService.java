@@ -59,4 +59,8 @@ public class ProfProfileService {
 
         return profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
     }
+
+    public void deleteProfProfile(Long profProfileUID) {
+        profProfileRepository.deleteById(profProfileUID);
+    }
 }
