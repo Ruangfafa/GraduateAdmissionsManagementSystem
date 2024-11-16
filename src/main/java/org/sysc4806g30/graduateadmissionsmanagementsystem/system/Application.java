@@ -28,4 +28,12 @@ public class Application {
     public Long getEventUID() {
         return eventUID;
     }
+
+    public String getDesProf() {
+        return desireProfessors;
+    }
+
+    public Long getUserUID() {
+        return userUID;
+    }
 }
