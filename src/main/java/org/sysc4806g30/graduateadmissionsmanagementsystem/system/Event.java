@@ -35,7 +35,6 @@ public class Event {
     @Column(name = "DESCRIPTION")
     private String description;
 
-
     public void setEventUID(Long eventUID) {
         this.eventUID = eventUID;
     }

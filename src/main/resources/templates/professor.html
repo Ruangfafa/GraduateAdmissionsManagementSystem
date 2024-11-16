@@ -2,12 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Professor Events</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/professorController.js"></script>
 </head>
 <body>
 <div class="title-container">
     <h1>PROFESSOR</h1>
 </div>
 
+<div id="eventListContainer">
+    <h2>Event List</h2>
+    <ul id="eventList"></ul>
+</div>
+<div id="professorEventDetailsContainer">
+    <h2>Find Event Details</h2>
+    <label for="professorSearchEventID">Enter Event ID:</label>
+    <input type="number" id="professorSearchEventID" placeholder="Enter Event ID">
+    <button onclick="fetchProfessorEventDetails()">Search</button>
+
+    <div id="professorEventDetails">
+        <h3>Event Title: <span id="professorEventTitle"></span></h3>
+        <p>Description: <span id="professorEventDescription"></span></p>
+    </div>
+</div>
 </body>
 </html>
