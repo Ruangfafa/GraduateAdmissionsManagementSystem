@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/prof")
+@RequestMapping("/professor")
 public class ProfProfileController {
     private final ProfProfileService profProfileService;
     private static final Logger logger = LoggerFactory.getLogger(ProfProfileController.class);
