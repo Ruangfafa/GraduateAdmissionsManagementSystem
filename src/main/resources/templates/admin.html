@@ -40,9 +40,23 @@
   <textarea id="description" placeholder="Enter event description" required></textarea><br><br>
 
   <input type="submit" value="Create Event" onclick="createNewEvent()">
+</div>
 
+<div id="eventListContainer">
+  <h2>Event List</h2>
+  <ul id="eventList"></ul>
+</div>
 
+<div id="eventDetailsContainer">
+  <h2>Find Event Details</h2>
+  <label for="searchEventID">Enter Event ID:</label>
+  <input type="number" id="searchEventID" placeholder="Enter Event ID">
+  <button onclick="fetchEventDetails()">Search</button>
 
+  <div id="eventDetails">
+    <h3>Event Title: <span id="eventTitle"></span></h3>
+    <p>Description: <span id="eventDescription"></span></p>
+  </div>
 </div>
 </body>
 </html>

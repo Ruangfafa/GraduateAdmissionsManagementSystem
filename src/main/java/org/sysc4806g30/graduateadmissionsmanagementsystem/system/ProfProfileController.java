@@ -39,12 +39,7 @@ public class ProfProfileController {
 
     @GetMapping("/{profUID}/profevent/{eventUID}")
     public String getProfProfilePage() {
-        return "professor";
-    }
-
-    @GetMapping("/{profUID}")
-    public @ResponseBody List<ProfProfile> getProfProfilesByProfUID(@PathVariable Long profUID) {
-        return profProfileService.getProfProfilesByProfUID(profUID);
+        return "profProfile";
     }
 
     @GetMapping("/{profUID}/profevent/{eventUID}/data")
@@ -54,10 +49,5 @@ public class ProfProfileController {
         return profProfileService.getProfProfilesByProfUIDAndEventUID(profUID, eventUID);
     }
 
-    @GetMapping("/all")
-    @ResponseBody
-    public List<ProfProfile> getAllProfProfiles() {
-        return profProfileService.getAllProfProfiles();
-    }
 
 }
