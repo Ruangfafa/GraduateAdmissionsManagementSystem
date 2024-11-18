@@ -61,6 +61,7 @@ public class ApplicationService {
         return new ArrayList<>(new HashSet<>(assignedStudents));
     }
 
+    // New method to update profComment by userUID
     @Transactional
     public void updateProfCommentByUserUID(Long userUID, Long profUID, Integer profComment) {
         List<Application> applications = applicationRepository.findByUserUID(userUID);
@@ -96,7 +97,7 @@ public class ApplicationService {
     }
 
 
-    public Application saveApplication(Application application) {
+    public void saveApplication(Application application) {
         if (application == null) {
             throw new NullPointerException("Application is null");
         }
@@ -121,7 +122,14 @@ public class ApplicationService {
         if (application.getStdFields() == null || application.getStdFields().isEmpty()) {
             throw new NullPointerException("Student Research Field must be provided");
         }
-        return applicationRepository.save(application);
+
+        if(applicationRepository.getApplicationByStdUIDAndEventUID(application.getUserUID(), application.getEventUID()) == null){
+            applicationRepository.save(application);
+        }else {
+            applicationRepository.overWriteApplication(application.getUserUID(), application.getEventUID(),
+                    application.getCoverLetterFile(), application.getDiplomaFile(), application.getGradeAuditFile(),
+                    application.getDesireProfessors(), application.getStdFields());
+        }
     }
 
     public HashMap<Long, String> getProfListByEventUID(Long eventUID) {
