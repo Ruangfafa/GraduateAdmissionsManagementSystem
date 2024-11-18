@@ -39,7 +39,8 @@ public class ProfProfileController {
 
             // Delete existing profiles
             ProfProfile existingProfiles = profProfileService.getProfProfilesByProfUIDAndEventUID(profUID, eventUID);
-            profProfileService.deleteProfProfile(existingProfiles.getProfProfileUID());
+            if (existingProfiles != null) {profProfileService.deleteProfProfile(existingProfiles.getProfProfileUID());}
+
 
 
             // Save new profile
