@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin View Application</title>
+    <script src="/adminApplicationController.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+<h1>Application: <span th:text="${applicationUID}"></span></h1>
+
+<input type="hidden" id="applicationUID" th:value="${applicationUID}">
+
+<label for="assignedToProf">Assigned To Prof: </label>
+<input type="text" id="assignedToProf" name="assignedToProf"><br><br>
+<input type="submit" value="submit" onclick="assignedToProf()">
+</body>
+</html>

@@ -23,18 +23,45 @@ public class Application {
     @Column(name = "DESPROF")
     private String desireProfessors;
     @Column(name = "PROFCOMMENT")
-    private PROFCOMMENT profcomment;
+    private String profcomment;
     @Column(name = "STDFIELDS")
     private String stdFields;
 
-    public Long getApplicationUID() {return applicationUID;}
-    public String getCoverLetterFile() {return coverLetterFile;}
-    public String getDiplomaFile() {return diplomaFile;}
-    public String getGradeAuditFile() {return gradeAuditFile;}
-    public Long getUserUID() {return userUID;}
+    // Getters for all fields
+    public Long getApplicationUID() {
+        return applicationUID;
+    }
+
+    public String getCoverLetterFile() {
+        return coverLetterFile;
+    }
+
+    public String getDiplomaFile() {
+        return diplomaFile;
+    }
+
+    public String getGradeAuditFile() {
+        return gradeAuditFile;
+    }
+
+    public Long getUserUID() {
+        return userUID;
+    }
+
     public String getDesireProfessors() {return desireProfessors;}
+
     public Long getEventUID() {
         return eventUID;
     }
+
     public String getStdFields(){return stdFields;}
+
+    // Getters and Setters
+    public String getProfcomment() { // Getter matches field name
+        return profcomment;
+    }
+
+    public void setProfcomment(String profcomment) { // Setter matches field name
+        this.profcomment = profcomment;
+    }
 }
