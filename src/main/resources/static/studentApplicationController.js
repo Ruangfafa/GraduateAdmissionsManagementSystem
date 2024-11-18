@@ -1,8 +1,8 @@
 // Extract stdUID and eventUID from URL
 function getUrlParams() {
     const pathSegments = window.location.pathname.split('/');
-    const stdIndex = pathSegments.indexOf('stdEvent');
-    const eventIndex = pathSegments.indexOf('student');
+    const stdIndex = pathSegments.indexOf('student');
+    const eventIndex = pathSegments.indexOf('stdEvent');
 
     if (stdIndex === -1) {
         console.error('Could not find student in URL');

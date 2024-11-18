@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @Controller
-@RequestMapping("/student")
 public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
 
-    @GetMapping("/{eventUID}/stdEvent/{stdUID}")
+    @GetMapping("/student/{stdUID}/stdEvent/{eventUID}")
     public String getStudentApplicationPage(
             @PathVariable Long stdUID,
             @PathVariable Long eventUID,
@@ -23,7 +22,7 @@ public class ApplicationController {
         return "studentApplication";
     }
 
-    @PostMapping(value = "/{eventUID}/stdEvent/{stdUID}", consumes = "application/json")
+    @PostMapping(value = "/student/{stdUID}/stdEvent/{eventUID}", consumes = "application/json")
     public String createApplication(
             @PathVariable Long stdUID,
             @PathVariable Long eventUID,
