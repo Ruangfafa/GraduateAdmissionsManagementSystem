@@ -36,4 +36,8 @@ public class Application {
     public Long getUserUID() {
         return userUID;
     }
+
+    public Long getApplicationUID() {
+        return applicationUID;
+    }
 }

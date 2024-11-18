@@ -7,17 +7,23 @@ import org.sysc4806g30.graduateadmissionsmanagementsystem.system.ApplicationServ
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/professors")
 public class ProfessorController {
 
     @Autowired
     private ApplicationService applicationService;
 
-    // Endpoint to retrieve assigned students for a professor by their profUID
-    @GetMapping("/{profUID}/assigned-students")
-    public List<Long> getAssignedStudents(@PathVariable  Long profUID) {
-        return applicationService.addASSIGNEDSTDUIDLISTForProf(profUID);
+    // Render the applications.html page for a specific professor and event
+    @GetMapping("/{profUID}/profEvent/{eventUID}")
+    public String serveApplicationsPage(@PathVariable Long profUID, @PathVariable Long eventUID) {
+        return "applications"; // Points to applications.html in src/main/resources/templates
     }
 
+    // Retrieve assigned students for a specific professor and event as JSON
+    @ResponseBody
+    @GetMapping("/{profUID}/profEvent/{eventUID}/assigned-students")
+    public List<Long> getAssignedStudents(@PathVariable Long profUID, @PathVariable Long eventUID) {
+        return applicationService.getAssignedStudentsForEvent(profUID, eventUID); // Updated service method
+    }
 }

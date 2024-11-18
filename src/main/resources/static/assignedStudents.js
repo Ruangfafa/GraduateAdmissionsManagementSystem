@@ -1,46 +1,62 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParts = window.location.pathname.split('/');
+    const profUID = urlParts[2]; // Extract profUID from the URL
+    const eventUID = urlParts[4]; // Extract eventUID from the URL
 
-async function fetchAssignedStudents(profUID) {
+    fetchAssignedStudents(profUID, eventUID);
+});
 
-    const response = await fetch(`/professors/${profUID}/assigned-students`);
-    const studentIds = await response.json();
+async function fetchAssignedStudents(profUID, eventUID) {
+    try {
+        // Fetch the assigned students for the given professor and event
+        const response = await fetch(`/professors/${profUID}/profEvent/${eventUID}/assigned-students`);
+        const studentIds = await response.json();
+        console.log("Fetched students:", studentIds);
 
-    const tableBody = document.getElementById("table-body");
-    tableBody.innerHTML = "";
+        const tableBody = document.getElementById("table-body");
+        tableBody.innerHTML = ""; // Clear the table body
 
-    studentIds.forEach(studentId => {
-        const row = document.createElement("tr");
+        studentIds.forEach(studentId => {
+            const row = document.createElement("tr");
 
+            // Add checkbox
+            const selectCell = document.createElement("td");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = studentId;
+            selectCell.appendChild(checkbox);
+            row.appendChild(selectCell);
 
-        // Selection checkbox for each student
-        const selectCell = document.createElement("td");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = studentId;  // Store student ID as the value
-        selectCell.appendChild(checkbox);
-        row.appendChild(selectCell);
+            // Add student ID
+            const studentIdCell = document.createElement("td");
+            studentIdCell.textContent = studentId;
+            row.appendChild(studentIdCell);
 
-        const studentIdCell = document.createElement("td");
-        studentIdCell.textContent = studentId;
-        row.appendChild(studentIdCell);
+            // Placeholder for application file
+            const applicationFileCell = document.createElement("td");
+            applicationFileCell.textContent = "N/A"; // Update if needed
+            row.appendChild(applicationFileCell);
 
-        // Evaluation dropdown cell
-        const ratingCell = document.createElement("td");
-        const select = document.createElement("select");
-        ["Don’t recommend for admission", "recommend but not interested in supervision",
-            "recommend but no funding", "recommend and yes to funding"].forEach(rating => {
-            const option = document.createElement("option");
-            option.value = rating;
-            option.textContent = rating;
-            select.appendChild(option);
+            // Add evaluation dropdown
+            const ratingCell = document.createElement("td");
+            const select = document.createElement("select");
+            ["Don’t recommend for admission", "Recommend but not interested in supervision",
+                "Recommend but no funding", "Recommend and yes to funding"].forEach(optionText => {
+                const option = document.createElement("option");
+                option.value = optionText;
+                option.textContent = optionText;
+                select.appendChild(option);
+            });
+            ratingCell.appendChild(select);
+            row.appendChild(ratingCell);
+
+            tableBody.appendChild(row);
         });
-        ratingCell.appendChild(select);
-        row.appendChild(ratingCell);
-
-        tableBody.appendChild(row);
-    });
+    } catch (error) {
+        console.error("Error fetching assigned students:", error);
+    }
 }
 
-// Function to handle the submission of the professor's selection
 function submitSelection() {
     const selectedStudents = [];
     const tableBody = document.getElementById("table-body");
@@ -58,6 +74,7 @@ function submitSelection() {
         }
     });
 
+    // Send the selected students to the backend
     fetch('/professors/submit-selection', {
         method: 'POST',
         headers: {
@@ -71,5 +88,4 @@ function submitSelection() {
             alert('Failed to submit selection.');
         }
     });
-
 }

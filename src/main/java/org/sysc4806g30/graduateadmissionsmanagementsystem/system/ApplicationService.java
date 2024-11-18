@@ -11,34 +11,40 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    //method for prof to add studentID to ASSIGNEDSTDUIDLIST if prof is in DESPROF list
-    public List<Long> addASSIGNEDSTDUIDLISTForProf(Long profUID){
-
+    // Existing method for fetching assigned students for a professor
+    public List<Long> addASSIGNEDSTDUIDLISTForProf(Long profUID) {
         List<Long> assignedStdUidList = new ArrayList<>();
-
         List<Application> applicationsList = applicationRepository.findAll();
 
-        for (Application a:applicationsList){
-            List<String> stingOfDesPROFList = new ArrayList<>();
-
-            stingOfDesPROFList = Arrays.asList(a.getDesProf().split(","));
-
-            if(stingOfDesPROFList.contains(profUID.toString())){
-
-                Long userID = a.getUserUID();
-
-                assignedStdUidList.add(userID);
-
+        for (Application a : applicationsList) {
+            if (a.getDesProf() == null || a.getDesProf().isEmpty()) {
+                continue;
             }
 
-
+            List<String> desProfList = Arrays.asList(a.getDesProf().split(","));
+            if (desProfList.contains(profUID.toString())) {
+                assignedStdUidList.add(a.getUserUID());
+            }
         }
 
-        //making sure no duplicate in the lift
-        assignedStdUidList = new ArrayList<>(new HashSet<>(assignedStdUidList));
-
-        return assignedStdUidList;
-
+        // Remove duplicates
+        return new ArrayList<>(new HashSet<>(assignedStdUidList));
     }
 
+    // New method to get assigned students for a professor and a specific event
+    public List<Long> getAssignedStudentsForEvent(Long profUID, Long eventUID) {
+        List<Long> assignedStudents = new ArrayList<>();
+        List<Application> applicationsList = applicationRepository.findAll();
+
+        for (Application a : applicationsList) {
+            // Check if the professor is in the desired professors list
+            if (a.getDesProf() != null && a.getDesProf().contains(profUID.toString())
+                    && a.getEventUID() != null && a.getEventUID().equals(eventUID)) {
+                assignedStudents.add(a.getUserUID());
+            }
+        }
+
+        // Remove duplicates
+        return new ArrayList<>(new HashSet<>(assignedStudents));
+    }
 }
