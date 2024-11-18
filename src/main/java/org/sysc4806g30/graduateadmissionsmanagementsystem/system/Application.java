@@ -13,7 +13,7 @@ public class Application {
     @Column(name = "CVF")
     private String coverLetterFile;
     @Column(name = "DIPLOMAF")
-    private String deplomaFile;
+    private String diplomaFile;
     @Column(name = "GRADEAUDITF")
     private String gradeAuditFile;
     @Column(name = "USERUID")
@@ -25,7 +25,36 @@ public class Application {
     @Column(name = "PROFCOMMENT")
     private PROFCOMMENT profcomment;
 
+    // Getters for all fields
+    public Long getApplicationUID() {
+        return applicationUID;
+    }
+
+    public String getCoverLetterFile() {
+        return coverLetterFile;
+    }
+
+    public String getDiplomaFile() {
+        return diplomaFile;
+    }
+
+    public String getGradeAuditFile() {
+        return gradeAuditFile;
+    }
+
+    public Long getUserUID() {
+        return userUID;
+    }
+
     public Long getEventUID() {
         return eventUID;
+    }
+
+    public String getDesireProfessors() {
+        return desireProfessors;
+    }
+
+    public PROFCOMMENT getProfcomment() {
+        return profcomment;
     }
 }

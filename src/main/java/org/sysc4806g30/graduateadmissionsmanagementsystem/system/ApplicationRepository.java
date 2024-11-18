@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     List<Application> findByUserUID(Long userUID);
+
+    List<Application> findByEventUID(Long eventUID);
 }
