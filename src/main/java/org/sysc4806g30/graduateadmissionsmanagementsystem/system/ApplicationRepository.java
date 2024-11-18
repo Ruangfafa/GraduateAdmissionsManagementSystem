@@ -17,4 +17,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     @Modifying
     @Query("UPDATE Application a SET a.profcomment = :profComment WHERE a.applicationUID = :applicationUID")
     void updateProfComment(@Param("applicationUID") Long applicationUID, @Param("profComment") String profComment);
+    List<Application> findByEventUID(Long eventUID);
 }

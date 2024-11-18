@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Events</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/studentController.js"></script>
+</head>
+<body>
+<div class="title-container">
+    <h1>STUDENT</h1>
+</div>
+
+<div id="eventListContainer">
+    <h2>Event List</h2>
+    <ul id="eventList"></ul>
+</div>
+
+<div id="studentEventDetailsContainer">
+    <h2>Find Event Details</h2>
+    <label for="studentSearchEventID">Enter Event ID:</label>
+    <input type="number" id="studentSearchEventID" placeholder="Enter Event ID">
+    <button onclick="fetchStudentEventDetails()">Search</button>
+
+    <div id="studentEventDetails">
+        <h3>Event Title: <span id="studentEventTitle"></span></h3>
+        <p>Description: <span id="studentEventDescription"></span></p>
+    </div>
+</div>
+</body>
+</html>

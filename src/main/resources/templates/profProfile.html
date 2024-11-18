@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professor Profile Management</title>
+</head>
+<body>
+<div class="container">
+    <h2>Professor Profile Form</h2>
+    <div id="currentContext"></div>
+    <form id="profProfileForm" method="post" onsubmit="return false;">
+        <div class="form-group">
+            <label for="research">Research:</label>
+            <input type="text" id="research" name="research" required>
+        </div>
+        <div class="form-group">
+            <label for="info">Info:</label>
+            <textarea id="info" name="info"></textarea>
+        </div>
+        <button type="submit">Submit Profile</button>
+    </form>
+
+    <div id="profilesList"></div>
+</div>
+
+<script src="/profProfile.js"></script>
+</body>
+</html>
+
+
+
+
+

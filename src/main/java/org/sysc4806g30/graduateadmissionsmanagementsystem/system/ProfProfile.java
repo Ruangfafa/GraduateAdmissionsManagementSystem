@@ -22,9 +22,51 @@ public class ProfProfile {
     @Column(name = "FINALSTDLIST")
     private String finalstdlist;
 
+    public ProfProfile() {}
+
 
 
     public Long getEventUID() {
         return eventUID;
     }
+    public void setEventUID(Long eventUID) {
+        this.eventUID = eventUID;
+    }
+    public Long getProfProfileUID() {
+        return profProfileUID;
+    }
+    public void setProfProfileUID(Long profProfileUID) {
+        this.profProfileUID = profProfileUID;
+    }
+    public Long getProfUID() {
+        return profUID;
+    }
+    public void setProfUID(Long profUID) {
+        this.profUID = profUID;
+    }
+    public String getResearch() {
+        return research;
+    }
+    public void setResearch(String research) {
+        this.research = research;
+    }
+    public String getInfo() {
+        return info;
+    }
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    public String getAssignedstduidlist() {
+        return assignedstduidlist;
+    }
+    public void setAssignedstduidlist(String assignedstduidlist) {
+        this.assignedstduidlist = assignedstduidlist;
+    }
+    public String getFinalstdlist() {
+        return finalstdlist;
+    }
+    public void setFinalstdlist(String finalstdlist) {
+        this.finalstdlist = finalstdlist;
+    }
+
 }
