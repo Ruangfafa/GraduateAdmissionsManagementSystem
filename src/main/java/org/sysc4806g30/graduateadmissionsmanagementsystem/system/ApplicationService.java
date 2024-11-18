@@ -3,14 +3,20 @@ package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.UserRepository;
 
+import java.util.HashMap;
 import java.util.*;
 
 @Service
+@Transactional
 public class ApplicationService {
-
     @Autowired
     private ApplicationRepository applicationRepository;
+    @Autowired
+    private ProfProfileRepository profProfileRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // Existing method for fetching assigned students for a professor
     public List<Long> addASSIGNEDSTDUIDLISTForProf(Long profUID) {
@@ -18,11 +24,11 @@ public class ApplicationService {
         List<Application> applicationsList = applicationRepository.findAll();
 
         for (Application a : applicationsList) {
-            if (a.getDesProf() == null || a.getDesProf().isEmpty()) {
+            if (a.getDesireProfessors() == null || a.getDesireProfessors().isEmpty()) {
                 continue;
             }
 
-            List<String> desProfList = Arrays.asList(a.getDesProf().split(","));
+            List<String> desProfList = Arrays.asList(a.getDesireProfessors().split(","));
             if (desProfList.contains(profUID.toString())) {
                 assignedStdUidList.add(a.getUserUID());
             }
@@ -39,7 +45,7 @@ public class ApplicationService {
 
         for (Application a : applicationsList) {
             // Check if the professor is in the desired professors list
-            if (a.getDesProf() != null && a.getDesProf().contains(profUID.toString())
+            if (a.getDesireProfessors() != null && a.getDesireProfessors().contains(profUID.toString())
                     && a.getEventUID() != null && a.getEventUID().equals(eventUID)) {
                 assignedStudents.add(a.getUserUID());
             }
@@ -59,5 +65,41 @@ public class ApplicationService {
             System.out.println("Updating profComment for userUID: " + userUID + " with value: " + profComment);
             applicationRepository.updateProfComment(applicationUID, String.valueOf(profComment)); // Save as a numeric value
         }
+    }
+
+    public Application saveApplication(Application application) {
+        if (application == null) {
+            throw new NullPointerException("Application is null");
+        }
+        if (application.getEventUID() == null) {
+            throw new NullPointerException("Event UID must be provided");
+        }
+        if (application.getUserUID() == null) {
+            throw new NullPointerException("User UID must be provided");
+        }
+        if (application.getCoverLetterFile() == null) {
+            throw new NullPointerException("CV File must be provided");
+        }
+        if (application.getDiplomaFile() == null) {
+            throw new NullPointerException("Diploma File must be provided");
+        }
+        if (application.getGradeAuditFile() == null) {
+            throw new NullPointerException("Grade Audit File must be provided");
+        }
+        if (application.getDesireProfessors() == null) {
+            throw new NullPointerException("Desired Professors must be provided");
+        }
+        if (application.getStdFields() == null || application.getStdFields().isEmpty()) {
+            throw new NullPointerException("Student Research Field must be provided");
+        }
+        return applicationRepository.save(application);
+    }
+
+    public HashMap<Long, String> getProfListByEventUID(Long eventUID) {
+        HashMap<Long, String> returnedMap = new HashMap<>();
+        for (Long profUID : profProfileRepository.findProUIDByEventUID(eventUID)) {
+            returnedMap.put(profUID, userRepository.findNameById(profUID));
+        }
+        return returnedMap;
     }
 }

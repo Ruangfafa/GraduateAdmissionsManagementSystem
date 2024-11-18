@@ -24,6 +24,8 @@ public class Application {
     private String desireProfessors;
     @Column(name = "PROFCOMMENT")
     private String profcomment;
+    @Column(name = "STDFIELDS")
+    private String stdFields;
 
     // Getters for all fields
     public Long getApplicationUID() {
@@ -46,15 +48,13 @@ public class Application {
         return userUID;
     }
 
+    public String getDesireProfessors() {return desireProfessors;}
+
     public Long getEventUID() {
         return eventUID;
     }
 
-    public String getDesProf() {
-        return desireProfessors;
-    }
-
-
+    public String getStdFields(){return stdFields;}
 
     // Getters and Setters
     public String getProfcomment() { // Getter matches field name
@@ -64,9 +64,4 @@ public class Application {
     public void setProfcomment(String profcomment) { // Setter matches field name
         this.profcomment = profcomment;
     }
-    public String getDesireProfessors() {
-        return desireProfessors;
-    }
-
-
 }
