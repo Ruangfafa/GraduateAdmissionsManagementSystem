@@ -39,6 +39,9 @@ public class ApplicationService {
         if (application.getDesireProfessors() == null) {
             throw new NullPointerException("Desired Professors must be provided");
         }
+        if (application.getStdFields() == null || application.getStdFields().isEmpty()) {
+            throw new NullPointerException("Student Research Field must be provided");
+        }
         return applicationRepository.save(application);
     }
 

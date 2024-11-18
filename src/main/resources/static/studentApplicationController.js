@@ -79,10 +79,13 @@ function submitApplication(){
     var diplomaFile = document.getElementById("diploma");
     var gradeFile = document.getElementById("grade");
     var selectedProfs = document.getElementById("selectedProfs");
+    var researchFields = document.getElementById("researchFields");
 
     var submitMsgLabel = document.getElementById("invalidMessage");
 
     var message = "Successfully submitted!";
+
+    console.log(researchFields.value)
 
     if (CVFile.files.length != 1){
         message = "Missing CV File!";
@@ -92,6 +95,8 @@ function submitApplication(){
         message = "Missing Grade Audit File!";
     }else if(selectedProfs.rows.length == 0){
         message = "Missing desired professor(s)!";
+    }else if (researchFields.value.trim() == ""){
+        message = "Missing Research Field information!";
     }else {
         const params = getUrlParams();
         var desiredProfsUID = [];
@@ -110,6 +115,7 @@ function submitApplication(){
                 userUID: params.stdUID,
                 eventUID: params.eventUID,
                 desireProfessors: desiredProfsUID.join(),
+                stdFields: researchFields.value.toString(),
                 profcomment: null
             }),
             success: function (data) {

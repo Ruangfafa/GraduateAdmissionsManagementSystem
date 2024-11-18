@@ -24,6 +24,8 @@ public class Application {
     private String desireProfessors;
     @Column(name = "PROFCOMMENT")
     private PROFCOMMENT profcomment;
+    @Column(name = "STDFIELDS")
+    private String stdFields;
 
     public Long getApplicationUID() {return applicationUID;}
     public String getCoverLetterFile() {return coverLetterFile;}
@@ -34,4 +36,5 @@ public class Application {
     public Long getEventUID() {
         return eventUID;
     }
+    public String getStdFields(){return stdFields;}
 }

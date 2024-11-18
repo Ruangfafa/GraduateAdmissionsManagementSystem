@@ -31,7 +31,9 @@
             <th:block th:each="prof : ${profList}">
                 <option th:text="${prof.getValue()}" th:value="${prof.getKey()}"></option>
             </th:block>
-        </select>
+        </select><br><br>
+        <label for="researchFields">Research Fields:</label>
+        <input type="text" id="researchFields" name="researchFields">
     </fieldset>
     <br><br><br>
     <label id="invalidMessage"></label><br>
