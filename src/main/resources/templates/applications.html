@@ -7,22 +7,22 @@
 <body>
 <h1>Assigned Students</h1>
 
-<table id="assigned-student-table" style="width:100%">
+<table id="assigned-student-table" style="width:100%; border-collapse: collapse;">
     <thead>
     <tr>
-        <th>Select</th>
-        <th>Student ID</th>
-        <th>Application File</th>
-        <th>Evaluation</th>
+        <th style="text-align: left; width: 15%;">Select</th>
+        <th style="text-align: left; width: 25%;">Student ID</th>
+        <th style="text-align: left; width: 30%;">Evaluation</th>
     </tr>
     </thead>
     <tbody id="table-body">
-    <!-- Rows will be populated by JavaScript -->
+    <!-- Rows will be dynamically added here -->
     </tbody>
 </table>
 
 <!-- Submit button for professor's selection -->
-<button onclick="submitSelection()">Submit Selection</button>
+<button type="button" onclick="submitSelection(event)">Submit Selection</button>
+
 
 <script src="/assignedStudents.js"></script>
 </body>

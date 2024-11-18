@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchAssignedStudents(profUID, eventUID) {
     try {
-        // Fetch the assigned students for the given professor and event
         const response = await fetch(`/professors/${profUID}/profEvent/${eventUID}/assigned-students`);
         const studentIds = await response.json();
         console.log("Fetched students:", studentIds);
@@ -32,21 +31,26 @@ async function fetchAssignedStudents(profUID, eventUID) {
             studentIdCell.textContent = studentId;
             row.appendChild(studentIdCell);
 
-            // Placeholder for application file
-            const applicationFileCell = document.createElement("td");
-            applicationFileCell.textContent = "N/A"; // Update if needed
-            row.appendChild(applicationFileCell);
-
             // Add evaluation dropdown
             const ratingCell = document.createElement("td");
             const select = document.createElement("select");
-            ["Don’t recommend for admission", "Recommend but not interested in supervision",
-                "Recommend but no funding", "Recommend and yes to funding"].forEach(optionText => {
+
+            // Map numeric values to meaningful descriptions
+            const ratingDescriptions = {
+                "0": "Don’t recommend for admission",
+                "1": "Recommend but not interested in supervision",
+                "2": "Recommend but no funding",
+                "3": "Recommend and yes to funding"
+            };
+
+            // Create options with numeric values
+            Object.entries(ratingDescriptions).forEach(([value, text]) => {
                 const option = document.createElement("option");
-                option.value = optionText;
-                option.textContent = optionText;
+                option.value = value; // Numeric value as a string
+                option.textContent = text; // Description
                 select.appendChild(option);
             });
+
             ratingCell.appendChild(select);
             row.appendChild(ratingCell);
 
@@ -61,7 +65,6 @@ function submitSelection() {
     const selectedStudents = [];
     const tableBody = document.getElementById("table-body");
 
-    // Loop through each row to find selected students
     tableBody.querySelectorAll("tr").forEach(row => {
         const checkbox = row.querySelector("input[type='checkbox']");
         const ratingDropdown = row.querySelector("select");
@@ -69,12 +72,14 @@ function submitSelection() {
         if (checkbox && checkbox.checked) {
             selectedStudents.push({
                 studentId: checkbox.value,
-                rating: ratingDropdown.value
+                rating: ratingDropdown.value // Numeric value
             });
         }
     });
 
-    // Send the selected students to the backend
+    // Log the payload being sent
+    console.log("Payload being sent:", selectedStudents);
+
     fetch('/professors/submit-selection', {
         method: 'POST',
         headers: {
@@ -89,3 +94,4 @@ function submitSelection() {
         }
     });
 }
+

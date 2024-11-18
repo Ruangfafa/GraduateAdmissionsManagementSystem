@@ -1,5 +1,6 @@
 package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,17 @@ public class ApplicationService {
 
         // Remove duplicates
         return new ArrayList<>(new HashSet<>(assignedStudents));
+    }
+
+    // New method to update profComment by userUID
+    @Transactional
+    public void updateProfCommentByUserUID(Long userUID, Integer profComment) {
+        List<Application> applications = applicationRepository.findByUserUID(userUID);
+
+        for (Application application : applications) {
+            Long applicationUID = application.getApplicationUID();
+            System.out.println("Updating profComment for userUID: " + userUID + " with value: " + profComment);
+            applicationRepository.updateProfComment(applicationUID, String.valueOf(profComment)); // Save as a numeric value
+        }
     }
 }

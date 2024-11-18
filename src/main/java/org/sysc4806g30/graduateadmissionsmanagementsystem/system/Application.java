@@ -23,7 +23,7 @@ public class Application {
     @Column(name = "DESPROF")
     private String desireProfessors;
     @Column(name = "PROFCOMMENT")
-    private PROFCOMMENT profcomment;
+    private String profcomment;
 
     public Long getEventUID() {
         return eventUID;
@@ -39,5 +39,14 @@ public class Application {
 
     public Long getApplicationUID() {
         return applicationUID;
+    }
+
+    // Getters and Setters
+    public String getProfcomment() { // Getter matches field name
+        return profcomment;
+    }
+
+    public void setProfcomment(String profcomment) { // Setter matches field name
+        this.profcomment = profcomment;
     }
 }
