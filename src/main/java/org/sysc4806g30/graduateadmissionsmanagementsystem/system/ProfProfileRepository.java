@@ -19,4 +19,7 @@ public interface ProfProfileRepository extends JpaRepository<ProfProfile, Long> 
             @Param("eventUID") Long eventUID
     );
 
+    @Query("SELECT p.profUID FROM ProfProfile p WHERE p.eventUID = :eventID")
+    List<Long> findProUIDByEventUID(@Param("eventID") Long eventID);
+
 }
