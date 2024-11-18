@@ -24,11 +24,11 @@ public class ApplicationService {
         List<Application> applicationsList = applicationRepository.findAll();
 
         for (Application a : applicationsList) {
-            if (a.getDesProf() == null || a.getDesProf().isEmpty()) {
+            if (a.getDesireProfessors() == null || a.getDesireProfessors().isEmpty()) {
                 continue;
             }
 
-            List<String> desProfList = Arrays.asList(a.getDesProf().split(","));
+            List<String> desProfList = Arrays.asList(a.getDesireProfessors().split(","));
             if (desProfList.contains(profUID.toString())) {
                 assignedStdUidList.add(a.getUserUID());
             }
@@ -45,7 +45,7 @@ public class ApplicationService {
 
         for (Application a : applicationsList) {
             // Check if the professor is in the desired professors list
-            if (a.getDesProf() != null && a.getDesProf().contains(profUID.toString())
+            if (a.getDesireProfessors() != null && a.getDesireProfessors().contains(profUID.toString())
                     && a.getEventUID() != null && a.getEventUID().equals(eventUID)) {
                 assignedStudents.add(a.getUserUID());
             }
