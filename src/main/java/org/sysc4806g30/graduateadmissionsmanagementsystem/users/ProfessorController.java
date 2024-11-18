@@ -10,7 +10,7 @@ import org.sysc4806g30.graduateadmissionsmanagementsystem.system.SelectionRateUp
 import java.util.List;
 
 @Controller
-@RequestMapping("/professors")
+@RequestMapping("/professor")
 public class ProfessorController {
 
     @Autowired

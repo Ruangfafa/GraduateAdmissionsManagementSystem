@@ -24,7 +24,7 @@ public class ProfProfileController {
         this.profProfileService = profProfileService;
     }
 
-    @PostMapping("/{profUID}/profevent/{eventUID}/submit")
+    @PostMapping("/{profUID}/profEvent/{eventUID}/submit")
     @ResponseBody
     public ProfProfile createProfProfile(
             @PathVariable Long profUID,
@@ -56,12 +56,12 @@ public class ProfProfileController {
         }
     }
 
-    @GetMapping("/{profUID}/profevent/{eventUID}/page")
+    @GetMapping("/{profUID}/profEvent/{eventUID}/page")
     public String getProfProfilePage() {
         return "profProfile";
     }
 
-    @GetMapping("/{profUID}/profevent/{eventUID}/data")
+    @GetMapping("/{profUID}/profEvent/{eventUID}/data")
     @ResponseBody
     public List<ProfProfile> getProfProfilesByProfUIDAndEventUID(
             @PathVariable Long profUID,

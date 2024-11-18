@@ -2,7 +2,7 @@
 function getUrlParams() {
     const pathSegments = window.location.pathname.split('/');
     const profIndex = pathSegments.indexOf('professor');
-    const eventIndex = pathSegments.indexOf('profevent');
+    const eventIndex = pathSegments.indexOf('profEvent');
 
     if (profIndex === -1 || eventIndex === -1) {
         console.error('Could not find professor or event in URL');
@@ -21,7 +21,7 @@ async function loadProfiles() {
     if (!params) return;
 
     try {
-        const response = await fetch(`/professor/${params.profUID}/profevent/${params.eventUID}/data`);
+        const response = await fetch(`/professor/${params.profUID}/profEvent/${params.eventUID}/data`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             console.log('Submitting form data:', formData);
-            const response = await fetch(`/professor/${params.profUID}/profevent/${params.eventUID}/submit`, {
+            const response = await fetch(`/professor/${params.profUID}/profEvent/${params.eventUID}/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

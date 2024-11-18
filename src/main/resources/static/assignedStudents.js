@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchAssignedStudents(profUID, eventUID) {
     try {
-        const response = await fetch(`/professors/${profUID}/profEvent/${eventUID}/assigned-students`);
+        const response = await fetch(`/professor/${profUID}/profEvent/${eventUID}/assigned-students`);
         const studentIds = await response.json();
         console.log("Fetched students:", studentIds);
 
@@ -80,7 +80,7 @@ function submitSelection() {
     // Log the payload being sent
     console.log("Payload being sent:", selectedStudents);
 
-    fetch('/professors/submit-selection', {
+    fetch('/professor/submit-selection', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
