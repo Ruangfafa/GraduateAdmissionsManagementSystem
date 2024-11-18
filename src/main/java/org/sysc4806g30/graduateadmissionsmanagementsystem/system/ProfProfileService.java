@@ -52,7 +52,7 @@ public class ProfProfileService {
         return profProfileRepository.findByProfUID(profUID);
     }
 
-    public List<ProfProfile> getProfProfilesByProfUIDAndEventUID(Long profUID, Long eventUID) {
+    public ProfProfile getProfProfilesByProfUIDAndEventUID(Long profUID, Long eventUID) {
         if (profUID == null || eventUID == null) {
             throw new IllegalArgumentException("ProfUID and EventUID cannot be null");
         }
