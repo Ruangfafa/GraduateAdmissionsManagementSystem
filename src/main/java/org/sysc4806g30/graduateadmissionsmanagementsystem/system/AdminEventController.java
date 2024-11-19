@@ -80,31 +80,33 @@ public class AdminEventController {
         // Get all applications for this event
         List<Application> applications = applicationRepository.findByEventUID(eventUID);
 
-        // Get all prof profiles for this event
-        List<ProfProfile> profProfiles = profProfileRepository.findByEventUID(eventUID);
+        // Get all professor UIDs for this event
+        List<Long> profUIDs = profProfileRepository.findProUIDByEventUID(eventUID);
 
         // Create a map of professor assignments
         Map<Long, List<Application>> profApplications = new HashMap<>();
 
-        for (ProfProfile profile : profProfiles) {
+        for (Long profUID : profUIDs) {
+            ProfProfile profile = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
             List<Application> profApps = new ArrayList<>();
-            String[] assignedStudents = profile.getAssignedstduidlist().split(",");
+            if (profile != null) {
+                String[] assignedStudents = profile.getAssignedstduidlist().split(",");
 
-            for (String stdUid : assignedStudents) {
-                if (!stdUid.trim().isEmpty()) {
-                    Long studentId = Long.parseLong(stdUid.trim());
-                    applications.stream()
-                            .filter(app -> app.getUserUID().equals(studentId))
-                            .findFirst()
-                            .ifPresent(profApps::add);
+                for (String stdUid : assignedStudents) {
+                    if (!stdUid.trim().isEmpty()) {
+                        Long studentId = Long.parseLong(stdUid.trim());
+                        applications.stream()
+                                .filter(app -> app.getUserUID().equals(studentId))
+                                .findFirst()
+                                .ifPresent(profApps::add);
+                    }
                 }
-            }
 
-            profApplications.put(profile.getProfUID(), profApps);
+                profApplications.put(profUID, profApps);
+            }
         }
 
         model.addAttribute("profApplications", profApplications);
-        model.addAttribute("profProfiles", profProfiles);
         model.addAttribute("adminUID", adminUID);
         model.addAttribute("eventUID", eventUID);
         return "finalDecisionPage";
@@ -120,13 +122,11 @@ public class AdminEventController {
 
         try {
             // Find the specific prof profile
-            List<ProfProfile> profProfiles = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
+            ProfProfile profProfile = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
 
-            if (profProfiles.isEmpty()) {
+            if (profProfile == null) {
                 return ResponseEntity.notFound().build();
             }
-
-            ProfProfile profProfile = profProfiles.get(0);
 
             // Update finalstdlist
             if (selectedStudents != null && !selectedStudents.isEmpty()) {
@@ -146,3 +146,4 @@ public class AdminEventController {
         }
     }
 }
+
