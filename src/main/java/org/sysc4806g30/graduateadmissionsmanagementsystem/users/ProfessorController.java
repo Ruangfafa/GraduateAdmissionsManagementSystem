@@ -29,16 +29,18 @@ public class ProfessorController {
         return applicationService.getAssignedStudentsForEvent(profUID, eventUID); // Updated service method
     }
 
-    @PostMapping("/submit-selection")
-    public ResponseEntity<?> submitSelection(@RequestBody List<SelectionRateUpdate> selections) {
+    @PostMapping("/{profUID}/submit-selection")
+    public ResponseEntity<?> submitSelection(@PathVariable Long profUID, @RequestBody List<SelectionRateUpdate> selections) {
         selections.forEach(selection -> {
+            System.out.println("Professor ID: " + profUID);
             System.out.println("Student ID: " + selection.getStudentId());
             System.out.println("Rating: " + selection.getRating());
 
-            // Call the service method to update the database
-            applicationService.updateProfCommentByUserUID(selection.getStudentId(), selection.getRating());
+            // Call the service method to update the database with profUID and rating
+            applicationService.updateProfCommentByUserUID(selection.getStudentId(), profUID, selection.getRating());
         });
 
         return ResponseEntity.ok("Selection submitted successfully!");
     }
+
 }

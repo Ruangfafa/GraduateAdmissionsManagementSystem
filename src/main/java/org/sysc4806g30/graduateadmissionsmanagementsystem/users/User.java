@@ -50,6 +50,14 @@ public abstract class User {
         this.eMail = eMail;
     }
 }
-//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Ruangfafa\",\"userPassword\":\"332335\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
-//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Rossa\",\"userPassword\":\"000000\",\"USERTYPE\":\"PROF\",\"eMail\":\"rossaExample@gmail.com\"}"
-//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"Admin#1\",\"userPassword\":\"123456\",\"USERTYPE\":\"ADMIN\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s1\",\"userPassword\":\"1\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s2\",\"userPassword\":\"2\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s3\",\"userPassword\":\"3\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s4\",\"userPassword\":\"4\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s5\",\"userPassword\":\"5\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"s6\",\"userPassword\":\"6\",\"USERTYPE\":\"STD\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"p1\",\"userPassword\":\"1\",\"USERTYPE\":\"PROF\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"p2\",\"userPassword\":\"2\",\"USERTYPE\":\"PROF\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"p3\",\"userPassword\":\"3\",\"USERTYPE\":\"PROF\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"a1\",\"userPassword\":\"1\",\"USERTYPE\":\"ADMIN\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"
+//curl.exe --% -X POST http://localhost:8080/users -H "Content-Type: application/json" -d "{\"userName\":\"a2\",\"userPassword\":\"2\",\"USERTYPE\":\"ADMIN\",\"eMail\":\"clksdysjsh0317@gmail.com\"}"

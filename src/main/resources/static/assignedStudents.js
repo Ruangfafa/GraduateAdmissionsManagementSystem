@@ -1,9 +1,15 @@
+let profUID;
+let eventUID;
+
 document.addEventListener("DOMContentLoaded", function () {
     const urlParts = window.location.pathname.split('/');
-    const profUID = urlParts[2]; // Extract profUID from the URL
-    const eventUID = urlParts[4]; // Extract eventUID from the URL
+    profUID = urlParts[2]; // Extract profUID from the URL
+    eventUID = urlParts[4]; // Extract eventUID from the URL
 
     fetchAssignedStudents(profUID, eventUID);
+
+    // Attach the submitSelection function to the submit button click event
+    document.getElementById("submitButton").addEventListener("click", submitSelection);
 });
 
 async function fetchAssignedStudents(profUID, eventUID) {
@@ -80,7 +86,7 @@ function submitSelection() {
     // Log the payload being sent
     console.log("Payload being sent:", selectedStudents);
 
-    fetch('/professor/submit-selection', {
+    fetch(`/professor/${profUID}/submit-selection`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -94,4 +100,3 @@ function submitSelection() {
         }
     });
 }
-
