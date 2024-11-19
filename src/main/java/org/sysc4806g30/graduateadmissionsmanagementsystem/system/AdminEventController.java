@@ -52,10 +52,9 @@ public class AdminEventController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found.");
         }
         Long userUID = applicationOptional.get().getUserUID();
-        List<ProfProfile> profProfiles = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
+        ProfProfile profProfile = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
 
-        if (!profProfiles.isEmpty()) {
-            ProfProfile profProfile = profProfiles.get(0);
+        if (!(profProfile ==null)) {
             String assignedList = profProfile.getAssignedstduidlist();
 
             if (assignedList == null) {

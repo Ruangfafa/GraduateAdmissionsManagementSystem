@@ -38,10 +38,10 @@ public class ProfProfileController {
             profProfile.setEventUID(eventUID);
 
             // Delete existing profiles
-            List<ProfProfile> existingProfiles = profProfileService.getProfProfilesByProfUIDAndEventUID(profUID, eventUID);
-            for (ProfProfile existing : existingProfiles) {
-                profProfileService.deleteProfProfile(existing.getProfProfileUID());
-            }
+            ProfProfile existingProfiles = profProfileService.getProfProfilesByProfUIDAndEventUID(profUID, eventUID);
+            if (existingProfiles != null) {profProfileService.deleteProfProfile(existingProfiles.getProfProfileUID());}
+
+
 
             // Save new profile
             ProfProfile saved = profProfileService.saveProfProfile(profProfile);
@@ -63,7 +63,7 @@ public class ProfProfileController {
 
     @GetMapping("/{profUID}/profEvent/{eventUID}/data")
     @ResponseBody
-    public List<ProfProfile> getProfProfilesByProfUIDAndEventUID(
+    public ProfProfile getProfProfilesByProfUIDAndEventUID(
             @PathVariable Long profUID,
             @PathVariable Long eventUID) {
         try {

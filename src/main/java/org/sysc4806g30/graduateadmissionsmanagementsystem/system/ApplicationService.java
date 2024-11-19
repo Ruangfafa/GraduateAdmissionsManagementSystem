@@ -41,15 +41,21 @@ public class ApplicationService {
     // New method to get assigned students for a professor and a specific event
     public List<Long> getAssignedStudentsForEvent(Long profUID, Long eventUID) {
         List<Long> assignedStudents = new ArrayList<>();
-        List<Application> applicationsList = applicationRepository.findAll();
+        ProfProfile profProfile = profProfileRepository.findByProfUIDAndEventUID(profUID,eventUID);
 
-        for (Application a : applicationsList) {
-            // Check if the professor is in the desired professors list
-            if (a.getDesireProfessors() != null && a.getDesireProfessors().contains(profUID.toString())
-                    && a.getEventUID() != null && a.getEventUID().equals(eventUID)) {
-                assignedStudents.add(a.getUserUID());
-            }
+        String tempStdList = profProfile.getAssignedstduidlist();
+        String[] stdIdArray = tempStdList.split(",");
+        for (String id : stdIdArray) {
+            assignedStudents.add(Long.parseLong(id));
         }
+
+//        for (Application a : applicationsList) {
+//            // Check if the professor is in the desired professors list
+//            if (a.getDesireProfessors() != null && a.getDesireProfessors().contains(profUID.toString())
+//                    && a.getEventUID() != null && a.getEventUID().equals(eventUID)) {
+//                assignedStudents.add(a.getUserUID());
+//            }
+//        }
 
         // Remove duplicates
         return new ArrayList<>(new HashSet<>(assignedStudents));
@@ -57,15 +63,39 @@ public class ApplicationService {
 
     // New method to update profComment by userUID
     @Transactional
-    public void updateProfCommentByUserUID(Long userUID, Integer profComment) {
+    public void updateProfCommentByUserUID(Long userUID, Long profUID, Integer profComment) {
         List<Application> applications = applicationRepository.findByUserUID(userUID);
 
         for (Application application : applications) {
             Long applicationUID = application.getApplicationUID();
-            System.out.println("Updating profComment for userUID: " + userUID + " with value: " + profComment);
-            applicationRepository.updateProfComment(applicationUID, String.valueOf(profComment)); // Save as a numeric value
+            String existingComments = application.getProfcomment();
+
+            // Parse existing comments into a map
+            Map<Long, Integer> commentsMap = new HashMap<>();
+            if (existingComments != null && !existingComments.isEmpty()) {
+                String[] entries = existingComments.split(";");
+                for (String entry : entries) {
+                    String[] parts = entry.split(",");
+                    Long existingProfID = Long.parseLong(parts[0]);
+                    Integer existingComment = Integer.parseInt(parts[1]);
+                    commentsMap.put(existingProfID, existingComment);
+                }
+            }
+
+            // Update or add the new comment
+            commentsMap.put(profUID, profComment);
+
+            // Convert map back to the desired string format
+            StringBuilder updatedComments = new StringBuilder();
+            for (Map.Entry<Long, Integer> entry : commentsMap.entrySet()) {
+                updatedComments.append(entry.getKey()).append(",").append(entry.getValue()).append(";");
+            }
+
+            // Save the updated profComment string
+            applicationRepository.updateProfComment(applicationUID, updatedComments.toString());
         }
     }
+
 
     public void saveApplication(Application application) {
         if (application == null) {

@@ -25,17 +25,17 @@ async function loadProfiles() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const profiles = await response.json();
+        const profile = await response.json();
 
         const profilesList = document.getElementById('profilesList');
         profilesList.innerHTML = '<h3>Existing Profiles</h3>';
 
-        if (profiles.length === 0) {
+        if (profile.length === 0) {
             profilesList.innerHTML += '<p>No profiles found for this professor and event.</p>';
             return;
         }
 
-        profiles.forEach(profile => {
+
             profilesList.innerHTML += `
                 <div class="profile">
                     <p><strong>Profile UID:</strong> ${profile.profProfileUID}</p>
@@ -45,7 +45,7 @@ async function loadProfiles() {
                     <p><strong>Final List:</strong> ${profile.finalstdlist || 'None'}</p>
                 </div>
             `;
-        });
+
     } catch (error) {
         console.error('Error loading profiles:', error);
         document.getElementById('profilesList').innerHTML =
