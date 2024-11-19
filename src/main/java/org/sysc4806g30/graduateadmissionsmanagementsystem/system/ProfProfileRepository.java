@@ -11,6 +11,8 @@ public interface ProfProfileRepository extends JpaRepository<ProfProfile, Long> 
 
     List<ProfProfile> findByProfUID(Long profUID);
 
+    List<ProfProfile> findByEventUID(Long eventUID);
+
     List<ProfProfile> findByProfUIDAndEventUID(Long profUID, Long eventUID);
 
     @Query("SELECT p FROM ProfProfile p WHERE p.profUID = :profUID AND p.eventUID = :eventUID")

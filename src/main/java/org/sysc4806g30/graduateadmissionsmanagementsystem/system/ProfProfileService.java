@@ -63,4 +63,21 @@ public class ProfProfileService {
     public void deleteProfProfile(Long profProfileUID) {
         profProfileRepository.deleteById(profProfileUID);
     }
+
+    public void updateFinalStdList(Long eventUID, List<String> selectedStudents) {
+        List<ProfProfile> profProfiles = profProfileRepository.findByEventUID(eventUID);
+        for (ProfProfile profProfile : profProfiles) {
+            String finalStdList = profProfile.getFinalstdlist();
+            if (finalStdList == null) {
+                finalStdList = "";
+            }
+            for (String studentUID : selectedStudents) {
+                if (!finalStdList.contains(studentUID)) {
+                    finalStdList += (finalStdList.isEmpty() ? "" : ",") + studentUID;
+                }
+            }
+            profProfile.setFinalstdlist(finalStdList);
+            profProfileRepository.save(profProfile);
+        }
+    }
 }

@@ -109,4 +109,8 @@ public class ApplicationService {
         }
         return returnedMap;
     }
+
+    public List<Application> getApplicationsByEventUID(Long eventUID) {
+        return applicationRepository.findByEventUID(eventUID);
+    }
 }
