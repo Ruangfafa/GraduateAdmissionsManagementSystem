@@ -7,9 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminEventController {
@@ -19,6 +18,12 @@ public class AdminEventController {
 
     @Autowired
     private ProfProfileRepository profProfileRepository;
+
+    @Autowired
+    private ApplicationService applicationService;
+
+    @Autowired
+    private ProfProfileService profProfileService;
 
     // Renders the adminEvent page with applications data
     @GetMapping("/admin/{adminUID}/adminEvent/{eventUID}")
@@ -67,4 +72,78 @@ public class AdminEventController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Professor or Event not found.");
         }
     }
+
+    @GetMapping("/admin/{adminUID}/adminEvent/{eventUID}/finalDecision")
+    public String viewFinalDecisionPage(@PathVariable Long adminUID,
+                                        @PathVariable Long eventUID,
+                                        Model model) {
+        // Get all applications for this event
+        List<Application> applications = applicationRepository.findByEventUID(eventUID);
+
+        // Get all professor UIDs for this event
+        List<Long> profUIDs = profProfileRepository.findProUIDByEventUID(eventUID);
+
+        // Create a map of professor assignments
+        Map<Long, List<Application>> profApplications = new HashMap<>();
+
+        for (Long profUID : profUIDs) {
+            ProfProfile profile = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
+            List<Application> profApps = new ArrayList<>();
+            if (profile != null) {
+                String[] assignedStudents = profile.getAssignedstduidlist().split(",");
+
+                for (String stdUid : assignedStudents) {
+                    if (!stdUid.trim().isEmpty()) {
+                        Long studentId = Long.parseLong(stdUid.trim());
+                        applications.stream()
+                                .filter(app -> app.getUserUID().equals(studentId))
+                                .findFirst()
+                                .ifPresent(profApps::add);
+                    }
+                }
+
+                profApplications.put(profUID, profApps);
+            }
+        }
+
+        model.addAttribute("profApplications", profApplications);
+        model.addAttribute("adminUID", adminUID);
+        model.addAttribute("eventUID", eventUID);
+        return "finalDecisionPage";
+    }
+
+    @PostMapping("/admin/{adminUID}/adminEvent/{eventUID}/profprofile/{profUID}/finalDecision")
+    @ResponseBody
+    public ResponseEntity<?> submitFinalDecision(
+            @PathVariable Long adminUID,
+            @PathVariable Long eventUID,
+            @PathVariable Long profUID,
+            @RequestParam(value = "selectedStudents[]", required = false) List<Long> selectedStudents) {
+
+        try {
+            // Find the specific prof profile
+            ProfProfile profProfile = profProfileRepository.findByProfUIDAndEventUID(profUID, eventUID);
+
+            if (profProfile == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Update finalstdlist
+            if (selectedStudents != null && !selectedStudents.isEmpty()) {
+                profProfile.setFinalstdlist(String.join(",",
+                        selectedStudents.stream().map(String::valueOf).collect(Collectors.toList())));
+            } else {
+                profProfile.setFinalstdlist("");
+            }
+
+            profProfileRepository.save(profProfile);
+
+            return ResponseEntity.ok().body("Final decisions saved successfully for professor " + profUID);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error saving final decisions: " + e.getMessage());
+        }
+    }
 }
+
