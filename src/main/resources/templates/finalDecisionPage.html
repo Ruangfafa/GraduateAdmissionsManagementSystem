@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Final Decision</title>
+    <script src="/finalDecisionPage.js"></script>
+</head>
+<body>
+<h1>Final Decision</h1>
+
+<div class="legend">
+    <div class="legend-item">
+        <span class="comment-N">●</span> N: Don't recommend for admission
+    </div>
+    <div class="legend-item">
+        <span class="comment-R">●</span> R: Recommend but not interested in supervision
+    </div>
+    <div class="legend-item">
+        <span class="comment-YN">●</span> YN: Recommend but no funding
+    </div>
+    <div class="legend-item">
+        <span class="comment-YF">●</span> YF: Recommend and yes to funding
+    </div>
+</div>
+
+<div th:each="profEntry : ${profApplications}" class="professor-section">
+    <h2 th:text="'Professor ID: ' + ${profEntry.key}"></h2>
+    <div th:id="'successMessage-' + ${profEntry.key}" class="success-message"></div>
+    <div th:id="'errorMessage-' + ${profEntry.key}" class="error-message"></div>
+
+    <form th:id="'finalDecisionForm-' + ${profEntry.key}"
+          class="final-decision-form"
+          th:data-prof-id="${profEntry.key}"
+          th:data-admin-id="${adminUID}"
+          th:data-event-id="${eventUID}">
+        <table>
+            <tr>
+                <th>Student ID</th>
+                <th>Professor Comment</th>
+                <th>Select</th>
+            </tr>
+            <tr th:each="app : ${profEntry.value}">
+                <td th:text="${app.userUID}"></td>
+                <td>
+                    <th:block th:if="${app.profcomment != null and !#strings.isEmpty(app.profcomment)}">
+                        <th:block th:each="comment : ${#strings.arraySplit(app.profcomment, ';')}">
+                            <th:block th:with="parts=${#strings.arraySplit(comment, ',')}">
+                                <th:block th:if="${#arrays.length(parts) == 2 and parts[0].trim() == profEntry.key.toString()}">
+                    <span th:class="'comment-' + ${parts[1].trim()}">
+                        <span th:switch="${parts[1].trim()}">
+                            <span th:case="'0'" th:text="'Don\'t recommend for admission'"></span>
+                            <span th:case="'1'" th:text="'Recommend but not interested in supervision'"></span>
+                            <span th:case="'2'" th:text="'Recommend but no funding'"></span>
+                            <span th:case="'3'" th:text="'Recommend and yes to funding'"></span>
+                            <span th:case="*" th:text="'Unknown comment: ' + ${parts[1].trim()}"></span>
+                        </span>
+                    </span>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                    <span th:if="${app.profcomment == null or #strings.isEmpty(app.profcomment)}" style="color: #666;">
+                        No comment provided
+                    </span>
+                </td>
+
+                <td><input type="checkbox" name="selectedStudents" th:value="${app.userUID}"></td>
+            </tr>
+        </table>
+        <button type="submit">Submit Final Decision</button>
+    </form>
+</div>
+</body>
+</html>

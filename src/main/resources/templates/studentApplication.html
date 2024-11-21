@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Application Management</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/studentApplicationController.js"></script>
+</head>
+<body>
+<div class="title-container">
+    <h1>Application Page</h1>
+</div>
+<div class="application-info-container">
+    <fieldset>
+        <legend>Required Files</legend>
+        <label for="CV">CV File:</label>
+        <input type="file" id="CV" name="CV" accept=".pdf"><br><br>
+        <label for="diploma">Diploma File:</label>
+        <input type="file" id="diploma" name="diploma" accept=".pdf"><br><br>
+        <label for="grade">Grade Audit File:</label>
+        <input type="file" id="grade" name="grade" accept=".pdf"><br><br>
+    </fieldset>
+    <br><br><br>
+    <fieldset>
+        <legend>Research Interest</legend>
+        <label for="selectedProfs">Desired Professor(s):</label>
+        <table id="selectedProfs"></table>
+        <select name="profList" id="profList" onchange="selectProf()">
+            <option text="" value="default"></option>
+            <th:block th:each="prof : ${profList}">
+                <option th:text="${prof.getValue()}" th:value="${prof.getKey()}"></option>
+            </th:block>
+        </select><br><br>
+        <label for="researchFields">Research Fields:</label>
+        <input type="text" id="researchFields" name="researchFields">
+    </fieldset>
+    <br><br><br>
+    <label id="invalidMessage"></label><br>
+    <input type="submit" value="Submit Application" onclick="submitApplication()">
+</div>
+</body>
+</html>

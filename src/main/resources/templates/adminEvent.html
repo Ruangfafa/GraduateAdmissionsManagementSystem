@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Event Applications</title>
+    <script src="/adminEventController.js"></script>
+</head>
+<body>
+<h1>Applications for Event ID: <span th:text="${eventUID}"></span></h1>
+
+<input type="hidden" id="eventUID" th:value="${eventUID}" />
+
+<div>
+    <h2>Application List</h2>
+    <ul id="applicationList">
+        <!-- Application items will be populated here by JS -->
+    </ul>
+</div>
+</body>
+</html>
