@@ -1,4 +1,4 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.users.UserRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
 @Service
 public class MailingSystem {

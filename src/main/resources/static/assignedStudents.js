@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchAssignedStudents(profUID, eventUID);
 
-    // Attach the submitSelection function to the submit button click event
-    document.getElementById("submitButton").addEventListener("click", submitSelection);
 });
 
 async function fetchAssignedStudents(profUID, eventUID) {
@@ -97,6 +95,37 @@ function submitSelection() {
             alert('Selection submitted successfully!');
         } else {
             alert('Failed to submit selection.');
+        }
+    });
+}
+function getUidFromUrl() {
+    const match = window.location.pathname.match(/\/(admin|student|professor)\/(\d+)/);
+    if (match) {
+        return match[2];
+    }
+    return null;
+}
+function getEventUIDFromUrl() {
+    const match = window.location.pathname.match(/\/profEvent\/(\d+)/);
+    if (match) {
+        return match[1];
+    }
+    return null;
+}
+function editProfProfile() {
+    const eventID = getEventUIDFromUrl();
+    const userUID = getUidFromUrl();
+
+    $.ajax({
+        url: `/professor/${userUID}/profEvent/${eventID}/api/editPage`,
+        type: "GET",
+        success: function(response) {
+            // Redirect the user to the returned URL
+            window.location.href = response;
+        },
+        error: function(error) {
+            console.error("Error Redirecting to /page", error);
+            alert("Error Redirecting to /page. Please try again.");
         }
     });
 }

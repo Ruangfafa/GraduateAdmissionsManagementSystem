@@ -1,4 +1,4 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.model;
 
 import jakarta.persistence.*;
 

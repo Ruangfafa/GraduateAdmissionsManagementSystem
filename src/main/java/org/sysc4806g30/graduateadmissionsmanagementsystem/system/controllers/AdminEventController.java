@@ -1,4 +1,4 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,6 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ProfProfileService;
 
 import java.util.*;
 import java.util.stream.Collectors;

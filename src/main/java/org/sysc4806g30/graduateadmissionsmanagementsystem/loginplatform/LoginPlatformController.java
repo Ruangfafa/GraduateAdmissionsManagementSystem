@@ -3,7 +3,7 @@ package org.sysc4806g30.graduateadmissionsmanagementsystem.loginplatform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.users.User;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.model.User;
 
 @Controller
 @RequestMapping("/login")

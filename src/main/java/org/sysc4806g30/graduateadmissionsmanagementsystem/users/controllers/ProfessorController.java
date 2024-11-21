@@ -1,11 +1,11 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.users;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.users.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.system.ApplicationService;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.system.SelectionRateUpdate;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.SelectionRateUpdate;
 
 import java.util.List;
 

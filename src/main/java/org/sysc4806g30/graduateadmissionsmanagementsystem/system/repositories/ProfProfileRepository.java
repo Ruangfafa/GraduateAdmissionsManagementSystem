@@ -1,8 +1,9 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
 
 import java.util.List;
 

@@ -1,8 +1,14 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.EventRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Event;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -85,16 +91,16 @@ public class EventController {
         return eventList;
     }
 
-    @GetMapping("/{userType}/api/eventDetails/{eventID}")
+    @GetMapping("/{userType}/{userUID}/api/eventDetails/{eventID}")
     @ResponseBody
-    public Map<String, String> getEventDetails(@PathVariable Long eventID) {
-        Event event = eventRepository.findById(eventID).orElse(null);
-        Map<String, String> details = new HashMap<>();
-        if (event != null) {
-            details.put("title", event.getTitle());
-            details.put("description", event.getDescription());
-        }
-        return details;
+    public String redirectToEventPage(
+            @PathVariable String userType,
+            @PathVariable Long userUID,
+            @PathVariable Long eventID) {
+        if (userType.equals("student"))
+        return "/" + userType + "/" + userUID + "/stdEvent/" + eventID;
+        if (userType.equals("professor")) return "/" + userType + "/" + userUID + "/profEvent/" + eventID;
+        return "/" + userType + "/" + userUID + "/" + userType + "Event/" + eventID;
     }
 
 

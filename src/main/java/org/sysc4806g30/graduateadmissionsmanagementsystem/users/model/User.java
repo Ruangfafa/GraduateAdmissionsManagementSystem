@@ -1,4 +1,4 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.users;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.users.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

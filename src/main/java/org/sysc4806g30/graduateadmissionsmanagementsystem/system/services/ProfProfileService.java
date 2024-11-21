@@ -1,13 +1,12 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.services;
 
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.users.User;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.users.UserRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
 
 import java.util.List;
 
