@@ -39,8 +39,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function getUidFromUrl() {
-    const match = window.location.pathname.match(/\/admin\/(\d+)/);
-    return match ? match[1] : null;
+    const match = window.location.pathname.match(/\/(admin|student|professor)\/(\d+)/);
+    if (match) {
+        return match[2];
+    }
+    return null;
+}
+function getUserTypeFromUrl() {
+    const match = window.location.pathname.match(/\/(admin|student|professor)/);
+    if (match){
+        return match[1];
+    }
+    return null;
 }
 
 function createNewEvent() {
@@ -96,23 +106,19 @@ function createNewEvent() {
 
 function fetchEventDetails() {
     const eventID = document.getElementById("searchEventID").value;
+    const userUID = getUidFromUrl();
+    const userType = getUserTypeFromUrl();
     if (!eventID) {
         alert("Please enter an Event ID.");
         return;
     }
 
     $.ajax({
-        url: `/admin/api/eventDetails/${eventID}`,
+        url: `/${userType}/${userUID}/api/eventDetails/${eventID}`,
         type: "GET",
-        success: function(event) {
-            if (event.title) {
-                document.getElementById("eventTitle").textContent = event.title;
-                document.getElementById("eventDescription").textContent = event.description;
-            } else {
-                alert("Event not found.");
-                document.getElementById("eventTitle").textContent = '';
-                document.getElementById("eventDescription").textContent = '';
-            }
+        success: function(response) {
+            // Redirect the user to the returned URL
+            window.location.href = response;
         },
         error: function(error) {
             console.error("Error fetching event details:", error);
@@ -120,3 +126,4 @@ function fetchEventDetails() {
         }
     });
 }
+

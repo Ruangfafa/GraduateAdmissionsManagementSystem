@@ -1,7 +1,6 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.model;
 
 import jakarta.persistence.*;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.enums.PROFCOMMENT;
 
 @Entity
 @Table(name = "APPLICATIONS")

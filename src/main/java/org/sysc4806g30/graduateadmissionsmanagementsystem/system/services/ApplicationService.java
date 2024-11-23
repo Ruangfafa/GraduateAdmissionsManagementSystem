@@ -1,9 +1,13 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.sysc4806g30.graduateadmissionsmanagementsystem.users.UserRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
 import java.util.HashMap;
 import java.util.*;

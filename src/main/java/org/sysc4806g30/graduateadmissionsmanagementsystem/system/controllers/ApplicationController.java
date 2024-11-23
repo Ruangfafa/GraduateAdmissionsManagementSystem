@@ -1,10 +1,12 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.system;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.system.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import ch.qos.logback.core.model.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 
 import java.util.HashMap;
 
@@ -20,6 +22,15 @@ public class ApplicationController {
             @PathVariable Long eventUID,
             Model model) {
         return "adminApplication";
+    }
+
+    @GetMapping("/admin/{userUID}/adminEvent/{eventID}/adminApp/{applicationUID}/api")
+    @ResponseBody
+    public String redirectToApplication(
+            @PathVariable Long userUID,
+            @PathVariable Long eventID,
+            @PathVariable Long applicationUID) {
+            return "/admin/" + userUID + "/adminEvent/" + eventID + "/adminApp/" + applicationUID;
     }
 
     @GetMapping("/student/{stdUID}/stdEvent/{eventUID}")
@@ -40,5 +51,13 @@ public class ApplicationController {
     ){
         applicationService.saveApplication(application);
         return "studentApplication";
+    }
+
+    @GetMapping("/professor/{userUID}/profEvent/{eventID}/api/editPage")
+    @ResponseBody
+    public String redirectToEditPage(
+            @PathVariable Long userUID,
+            @PathVariable Long eventID) {
+        return "/professor/" + userUID + "/profEvent/" + eventID + "/page";
     }
 }

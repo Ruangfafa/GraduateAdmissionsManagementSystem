@@ -1,10 +1,9 @@
-package org.sysc4806g30.graduateadmissionsmanagementsystem.users;
+package org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.List;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserName(String userName);
