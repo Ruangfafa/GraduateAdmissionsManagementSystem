@@ -24,6 +24,15 @@ public class ApplicationController {
         return "adminApplication";
     }
 
+    @GetMapping("/admin/{userUID}/adminEvent/{eventID}/adminApp/{applicationUID}/api")
+    @ResponseBody
+    public String redirectToApplication(
+            @PathVariable Long userUID,
+            @PathVariable Long eventID,
+            @PathVariable Long applicationUID) {
+            return "/admin/" + userUID + "/adminEvent/" + eventID + "/adminApp/" + applicationUID;
+    }
+
     @GetMapping("/student/{stdUID}/stdEvent/{eventUID}")
     public String getStudentApplicationPage(
             @PathVariable Long stdUID,

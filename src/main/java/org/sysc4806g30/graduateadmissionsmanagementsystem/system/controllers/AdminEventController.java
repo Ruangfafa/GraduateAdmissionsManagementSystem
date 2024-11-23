@@ -118,6 +118,14 @@ public class AdminEventController {
         return "finalDecisionPage";
     }
 
+    @GetMapping("/admin/{userUID}/adminEvent/{eventID}/fetchFinalDecision/api")
+    @ResponseBody
+    public String fetchFinalDecision(
+            @PathVariable Long userUID,
+            @PathVariable Long eventID) {
+        return "/admin/" + userUID + "/adminEvent/" + eventID + "/finalDecision";
+    }
+
     @PostMapping("/admin/{adminUID}/adminEvent/{eventUID}/profprofile/{profUID}/finalDecision")
     @ResponseBody
     public ResponseEntity<?> submitFinalDecision(
