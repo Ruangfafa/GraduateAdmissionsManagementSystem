@@ -11,7 +11,9 @@ import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfi
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.MailingSystem;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ProfProfileService;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +32,12 @@ public class AdminEventController {
 
     @Autowired
     private ProfProfileService profProfileService;
+
+    @Autowired
+    private MailingSystem mailingSystem;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Renders the adminEvent page with applications data
     @GetMapping("/admin/{adminUID}/adminEvent/{eventUID}")
@@ -72,7 +80,7 @@ public class AdminEventController {
                 profProfile.setAssignedstduidlist(assignedList);
                 profProfileRepository.save(profProfile);
             }
-
+            mailingSystem.sendEmail(profUID,"GAMS Auto Mailing","There are new students just assigned to you.");
             return ResponseEntity.ok("Assigned student successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Professor or Event not found.");
@@ -151,7 +159,14 @@ public class AdminEventController {
             }
 
             profProfileRepository.save(profProfile);
-
+            String mailingBody = "Your Final Students List are Decided:\n";
+            StringJoiner studentNames = new StringJoiner(", ");
+            for (String userUID : selectedStudents.stream().map(String::valueOf).collect(Collectors.toList())) {
+                studentNames.add(userRepository.findNameById(Long.parseLong(userUID)));
+                mailingSystem.sendEmail(Long.valueOf(userUID), "GAMS Auto Mailing", "You are registered to professor "+userRepository.findNameById(profUID)+".");
+            }
+            mailingBody += studentNames.toString();
+            mailingSystem.sendEmail(profUID, "GAMS Auto Mailing", mailingBody);
             return ResponseEntity.ok().body("Final decisions saved successfully for professor " + profUID);
 
         } catch (Exception e) {
