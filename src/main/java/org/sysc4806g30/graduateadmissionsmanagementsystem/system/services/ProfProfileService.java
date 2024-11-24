@@ -79,4 +79,8 @@ public class ProfProfileService {
             profProfileRepository.save(profProfile);
         }
     }
+    public List<ProfProfile> getProfProfilesByEventUID(Long eventUID) {
+        return profProfileRepository.findByEventUID(eventUID);
+    }
+
 }
