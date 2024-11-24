@@ -1,0 +1,12 @@
+create table applications (applicationuid bigint not null, eventuid bigint, useruid bigint, cvf varchar(255), desprof varchar(255), diplomaf varchar(255), gradeauditf varchar(255), profcomment varchar(255), stdfields varchar(255), primary key (applicationuid)) engine=InnoDB;
+create table applications_seq (next_val bigint) engine=InnoDB;
+insert into applications_seq values ( 1 );
+create table events (dur1 integer, dur2 integer, dur3 integer, dur4 integer, dur5 integer, eventuid bigint not null, initdate datetime(6), description varchar(255), title varchar(255), primary key (eventuid)) engine=InnoDB;
+create table events_seq (next_val bigint) engine=InnoDB;
+insert into events_seq values ( 1 );
+create table profprofiles (eventuid bigint, profprofileuid bigint not null, profuid bigint, assignedstduidlist varchar(255), finalstdlist varchar(255), info varchar(255), research varchar(255), primary key (profprofileuid)) engine=InnoDB;
+create table profprofiles_seq (next_val bigint) engine=InnoDB;
+insert into profprofiles_seq values ( 1 );
+create table users (useruid bigint not null, usertype varchar(31) not null, email varchar(255), username varchar(255), userpassword varchar(255), primary key (useruid)) engine=InnoDB;
+create table users_seq (next_val bigint) engine=InnoDB;
+insert into users_seq values ( 1 );
