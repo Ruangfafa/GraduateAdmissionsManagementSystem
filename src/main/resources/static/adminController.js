@@ -127,3 +127,39 @@ function fetchEventDetails() {
     });
 }
 
+function registerUser() {
+    const username = document.getElementById("newUsername").value;
+    const userType = document.getElementById("newUserType").value;
+    const email = document.getElementById("newEmail").value;
+
+    if (!username || !userType || !email) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const userData = {
+        userName: username,
+        userPassword: `${username}password`, // Automatically set password as "<username>password"
+        USERTYPE: userType,
+        eMail: email
+    };
+
+    $.ajax({
+        url: "/users",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(userData),
+        success: function(response) {
+            alert("User registered successfully!");
+            document.getElementById("newUsername").value = '';
+            document.getElementById("newUserType").value = '';
+            document.getElementById("newEmail").value = '';
+        },
+        error: function(error) {
+            console.error("Error registering user:", error);
+            alert("Failed to register user. Please try again.");
+        }
+    });
+}
+
+
