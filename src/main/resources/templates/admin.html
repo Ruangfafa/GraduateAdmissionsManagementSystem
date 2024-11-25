@@ -58,5 +58,26 @@
     <p>Description: <span id="eventDescription"></span></p>
   </div>
 </div>
+
+<div id="userRegistrationContainer">
+  <h2>Register User</h2>
+  <label for="newUsername">Username:</label>
+  <input type="text" id="newUsername" placeholder="Enter username" required><br><br>
+
+  <label for="newUserType">User Type:</label>
+  <select id="newUserType" required>
+    <option value="">Select User Type</option>
+    <option value="STD">Student</option>
+    <option value="PROF">Professor</option>
+    <option value="ADMIN">Admin</option>
+  </select><br><br>
+
+  <label for="newEmail">Email:</label>
+  <input type="email" id="newEmail" placeholder="Enter email" required><br><br>
+
+  <input type="submit" value="Register User" onclick="registerUser()">
+</div>
+
+
 </body>
 </html>

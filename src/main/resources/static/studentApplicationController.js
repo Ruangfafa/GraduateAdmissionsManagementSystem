@@ -131,3 +131,46 @@ function submitApplication(){
     }
     submitMsgLabel.innerText = message;
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const params = getUrlParams();
+    fetchProfProfiles(params.eventUID);
+});
+
+function fetchProfProfiles(eventUID) {
+    $.ajax({
+        url: '/student/stdEvent/' + eventUID + '/profProfiles',
+        type: 'GET',
+        success: function (profProfiles) {
+            displayProfProfiles(profProfiles);
+        },
+        error: function () {
+            console.error('Error fetching profProfiles');
+        }
+    });
+}
+
+function displayProfProfiles(profProfiles) {
+    var profProfileTableBody = document.getElementById("profProfileTableBody");
+    profProfileTableBody.innerHTML = ""; // Clear any existing rows
+
+    profProfiles.forEach(function (profProfile) {
+        var row = document.createElement("tr");
+
+        var profUIDCell = document.createElement("td");
+        profUIDCell.innerText = profProfile.profUID;
+        row.appendChild(profUIDCell);
+
+        var researchCell = document.createElement("td");
+        researchCell.innerText = profProfile.research || "N/A";
+        row.appendChild(researchCell);
+
+        var infoCell = document.createElement("td");
+        infoCell.innerText = profProfile.info || "N/A";
+        row.appendChild(infoCell);
+
+        profProfileTableBody.appendChild(row);
+    });
+}
+
