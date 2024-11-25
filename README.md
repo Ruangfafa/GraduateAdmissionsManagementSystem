@@ -20,7 +20,7 @@ The Graduate Admissions Management System (GAMS) is a web application designed t
 - Azure account (for deployment)
 
 ## UML Class Diagram of Models
-![UML Class Diagram](docs/GraduateAdmissionsManagementSystem.png)
+![Updated UML](https://github.com/user-attachments/assets/5bcef09d-81ad-4e6c-9b9a-0166031fec9d)
 
 The UML diagram illustrates the relationships between models, such as User, Application, Event, and ProfProfile. This provides an overview of the system's structure and the mapping to the database schema.
 
@@ -75,6 +75,5 @@ create table users (
 
 - Chia-Yu Liu
 - Rebecca Li	
-- Xianqi Wang
 - Zeid Alwash
 - Eric Mao
