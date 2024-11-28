@@ -3,12 +3,16 @@ package org.sysc4806g30.graduateadmissionsmanagementsystem.system.services;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Event;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.EventRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.*;
 
@@ -21,6 +25,11 @@ public class ApplicationService {
     private ProfProfileRepository profProfileRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+
 
     // Existing method for fetching assigned students for a professor
     public List<Long> addASSIGNEDSTDUIDLISTForProf(Long profUID) {
@@ -146,5 +155,58 @@ public class ApplicationService {
 
     public List<Application> getApplicationsByEventUID(Long eventUID) {
         return applicationRepository.findByEventUID(eventUID);
+    }
+
+    public LocalDate getDeadline(Long applicationID, String action){
+
+        Date itDate;
+
+        LocalDate deadline;
+
+        Application application = applicationRepository.findById(applicationID)
+                .orElseThrow(() -> new IllegalArgumentException("Cannot find application by ID"));
+
+        Event event = eventRepository.findById(application.getEventUID())
+                .orElseThrow(() -> new IllegalArgumentException("Cannot find event by ID"));
+
+        itDate = event.getInitDate();
+
+        LocalDate localinDate = itDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        int duration = 0;
+
+        if (action.equals("uploadProfProfile")){
+            duration = event.getDur1();
+        }else if(action.equals("uploadApplication")){
+            duration = event.getDur2();
+        }else if(action.equals("assignStudent")){
+            duration = event.getDur3();
+        }else if(action.equals("profComment")){
+            duration = event.getDur4();
+        }else if(action.equals("finalDecision")){
+            duration = event.getDur5();
+        }else{
+            throw new IllegalArgumentException("Invalid Action: " + action);
+        }
+
+        deadline = localinDate.plusDays(duration);
+
+        return deadline;
+
+    }
+
+    public boolean withinDeadline(Long applicationID, String action){
+
+        boolean result = true;
+
+        LocalDate deadline = getDeadline(applicationID, action);
+
+        LocalDate today = LocalDate.now();
+
+        if (today.isAfter(deadline)){
+            result = false;
+        }
+
+        return true;
     }
 }
