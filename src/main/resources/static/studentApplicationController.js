@@ -74,6 +74,21 @@ function removeSelectedProf(removedProf){
     }
 }
 
+let cvByte = "";
+
+async function getFilePromise(file) {
+    let promise = convertFileToBase64(file);
+    return await promise;
+}
+function convertFileToBase64(file) {
+    return new Promise(function (resolve, reject) {
+        let reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
 function submitApplication(){
     var CVFile = document.getElementById("CV");
     var diplomaFile = document.getElementById("diploma");
@@ -85,9 +100,15 @@ function submitApplication(){
 
     var message = "Successfully submitted!";
 
-    console.log(researchFields.value)
+    if(CVFile.files.length == 1) {
+        var cvPromise = getFilePromise(CVFile.files[0]);
+        cvPromise.then(function (result) {
+            cvByte = result;
+            console.log("finish loading cv")
+        })
+    }
 
-    if (CVFile.files.length != 1){
+    if (CVFile.files.length != 1) {
         message = "Missing CV File!";
     }else if (diplomaFile.files.length != 1){
         message = "Missing Diploma File!";
@@ -95,9 +116,13 @@ function submitApplication(){
         message = "Missing Grade Audit File!";
     }else if(selectedProfs.rows.length == 0){
         message = "Missing desired professor(s)!";
-    }else if (researchFields.value.trim() == ""){
+    }else if (researchFields.value.trim() == "") {
         message = "Missing Research Field information!";
+    }else if (cvByte == ""){
+        message = "Waiting for loading CV!";
     }else {
+        console.log(cvByte);
+
         const params = getUrlParams();
         var desiredProfsUID = [];
         for (var i = 0; i < selectedProfs.rows.length; i++) {
@@ -109,7 +134,7 @@ function submitApplication(){
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                coverLetterFile: CVFile.files[0].name,
+                coverLetterFile: cvByte.split(',')[1],
                 diplomaFile: diplomaFile.files[0].name,
                 gradeAuditFile: gradeFile.files[0].name,
                 userUID: params.stdUID,

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 
 @Controller
@@ -49,6 +52,17 @@ public class ApplicationController {
             @PathVariable Long eventUID,
             @RequestBody Application application
     ){
+        System.out.println("cv: " + application.getCoverLetterFile());
+        byte[] decodeCV = Base64.getDecoder().decode(application.getCoverLetterFile());
+        System.out.println("cv after decode: " + decodeCV);
+
+        try {
+            OutputStream testOut = new FileOutputStream("test.pdf");
+            testOut.write(decodeCV);
+            testOut.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         applicationService.saveApplication(application);
         return "studentApplication";
     }

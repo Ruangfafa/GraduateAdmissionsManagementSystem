@@ -32,5 +32,4 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     void overWriteApplication(@Param("stdUID") Long stdUID, @Param("eventUID") Long eventUID,
                               @Param("CVFile") String CVFile, @Param("diplomaFile") String diplomaFile, @Param("gradeFile") String gradeFile,
                               @Param("desProfs") String desProfs, @Param("stdFields") String stdFields);
-
 }

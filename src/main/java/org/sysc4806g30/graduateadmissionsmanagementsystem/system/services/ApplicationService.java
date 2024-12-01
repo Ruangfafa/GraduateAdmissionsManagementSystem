@@ -101,7 +101,7 @@ public class ApplicationService {
     }
 
 
-    public void saveApplication(Application application) {
+    public void saveApplication(Application application){
         if (application == null) {
             throw new NullPointerException("Application is null");
         }

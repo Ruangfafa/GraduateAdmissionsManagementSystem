@@ -9,7 +9,7 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "APPLICATIONUID")
     private Long applicationUID;
-    @Column(name = "CVF")
+    @Column(name = "CVF", length = 16777215)
     private String coverLetterFile;
     @Column(name = "DIPLOMAF")
     private String diplomaFile;
