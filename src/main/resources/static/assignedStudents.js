@@ -35,6 +35,30 @@ async function fetchAssignedStudents(profUID, eventUID) {
             studentIdCell.textContent = studentId;
             row.appendChild(studentIdCell);
 
+            // Add student CV preview button
+            const studentCVCell = document.createElement("td");
+            const cvButton = document.createElement("button");
+            cvButton.textContent = "View CV";
+            cvButton.addEventListener('click', function (){viewFile("cv", studentId);});
+            studentCVCell.appendChild(cvButton);
+            row.appendChild(studentCVCell);
+
+            // Add student diploma preview button
+            const studentDiplomaCell = document.createElement("td");
+            const diplomaButton = document.createElement("button");
+            diplomaButton.textContent = "View Diploma";
+            diplomaButton.addEventListener('click', function (){viewFile("dp", studentId);});
+            studentDiplomaCell.appendChild(diplomaButton);
+            row.appendChild(studentDiplomaCell);
+
+            // Add student CV preview button
+            const studentGradeCell = document.createElement("td");
+            const gradeButton = document.createElement("button");
+            gradeButton.textContent = "View grade";
+            gradeButton.addEventListener('click', function (){viewFile("gd", studentId);});
+            studentGradeCell.appendChild(gradeButton);
+            row.appendChild(studentGradeCell);
+
             // Add evaluation dropdown
             const ratingCell = document.createElement("td");
             const select = document.createElement("select");
@@ -126,6 +150,29 @@ function editProfProfile() {
         error: function(error) {
             console.error("Error Redirecting to /page", error);
             alert("Error Redirecting to /page. Please try again.");
+        }
+    });
+}
+
+function viewFile(fileType, studentId){
+    console.log(window.location.pathname);
+    $.ajax({
+        url: window.location.pathname,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({fileType: fileType, studentUID: studentId}),
+        success: function (data) {
+            if (data) {
+                // console.log(data)
+                let pdfW = window.open("");
+                pdfW.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+                    encodeURI(data) + "'></iframe>")
+            } else
+                alert("File Loading error!");
+        },
+        error: function () {
+            console.log('Error ${error}');
+            alert("Login Error!");
         }
     });
 }

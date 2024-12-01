@@ -147,4 +147,8 @@ public class ApplicationService {
     public List<Application> getApplicationsByEventUID(Long eventUID) {
         return applicationRepository.findByEventUID(eventUID);
     }
+
+    public Application getApplicationByApplicationID(Long applicationID) {
+        return applicationRepository.getApplicationByApplicationUID(applicationID);
+    }
 }

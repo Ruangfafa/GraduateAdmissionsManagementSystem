@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.Base64;
 import java.util.HashMap;
 
 @Controller
@@ -25,6 +22,17 @@ public class ApplicationController {
             @PathVariable Long eventUID,
             Model model) {
         return "adminApplication";
+    }
+
+    @PostMapping("/admin/{userUID}/adminEvent/{eventUID}/adminApp/{applicationUID}")
+    @ResponseBody
+    public String viewStudentApplication(
+            @PathVariable Long applicationUID,
+            @PathVariable Long userUID,
+            @PathVariable Long eventUID,
+            @RequestBody String fileType) {
+        Application application = applicationService.getApplicationByApplicationID(applicationUID);
+        return application.getTargetFileEncode(fileType);
     }
 
     @GetMapping("/admin/{userUID}/adminEvent/{eventID}/adminApp/{applicationUID}/api")
@@ -52,17 +60,14 @@ public class ApplicationController {
             @PathVariable Long eventUID,
             @RequestBody Application application
     ){
-        System.out.println("cv: " + application.getCoverLetterFile());
-        byte[] decodeCV = Base64.getDecoder().decode(application.getCoverLetterFile());
-        System.out.println("cv after decode: " + decodeCV);
+//        System.out.println("cv 64: " + application.getCv64());
+//        System.out.println("diploma 64: " + application.getDp64());
+//        System.out.println("grade 64: " + application.getGd64());
 
-        try {
-            OutputStream testOut = new FileOutputStream("test.pdf");
-            testOut.write(decodeCV);
-            testOut.close();
-        }catch (Exception e){
-            System.out.println(e);
-        }
+        application.updateFileData();
+//        System.out.println("cv after decode: " + application.getCoverLetterFile());
+//        System.out.println("diploma after decode: " + application.getDiplomaFile());
+//        System.out.println("grade after decode: " + application.getGradeAuditFile());
         applicationService.saveApplication(application);
         return "studentApplication";
     }

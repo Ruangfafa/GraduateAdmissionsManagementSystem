@@ -12,6 +12,13 @@
 
 <input type="hidden" id="applicationUID" th:value="${applicationUID}">
 
+<fieldset>
+    <legend>Application Information</legend>
+    <input type="submit" value="View CV" onclick="viewFile('cv')"><br><br>
+    <input type="submit" value="View Diploma" onclick="viewFile('dp')"><br><br>
+    <input type="submit" value="View Grade Audit" onclick="viewFile('gd')"><br><br>
+</fieldset>
+
 <label for="assignedToProf">Assigned To Prof: </label>
 <input type="text" id="assignedToProf" name="assignedToProf"><br><br>
 <input type="submit" value="submit" onclick="assignedToProf()">

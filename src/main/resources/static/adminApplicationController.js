@@ -23,3 +23,26 @@ function assignedToProf() {
         }
     });
 }
+
+function viewFile(fileType){
+    console.log(window.location.pathname);
+    $.ajax({
+        url: window.location.pathname,
+        type: 'POST',
+        contentType: 'text/plain',
+        data: fileType,
+        success: function (data) {
+            if (data) {
+                // console.log(data)
+                let pdfW = window.open("");
+                pdfW.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+                    encodeURI(data) + "'></iframe>")
+            } else
+                alert("File Loading error!");
+        },
+        error: function () {
+            console.log('Error ${error}');
+            alert("Login Error!");
+        }
+    });
+}
