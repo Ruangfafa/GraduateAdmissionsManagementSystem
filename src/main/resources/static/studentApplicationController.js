@@ -74,6 +74,24 @@ function removeSelectedProf(removedProf){
     }
 }
 
+let cvBase64 = "";
+let dpBase64 = "";
+let gdBase64 = "";
+let hasLoaded = false;
+
+async function getFilePromise(file) {
+    let promise = convertFileToBase64(file);
+    return await promise;
+}
+function convertFileToBase64(file) {
+    return new Promise(function (resolve, reject) {
+        let reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
 function submitApplication(){
     var CVFile = document.getElementById("CV");
     var diplomaFile = document.getElementById("diploma");
@@ -85,9 +103,8 @@ function submitApplication(){
 
     var message = "Successfully submitted!";
 
-    console.log(researchFields.value)
 
-    if (CVFile.files.length != 1){
+    if (CVFile.files.length != 1) {
         message = "Missing CV File!";
     }else if (diplomaFile.files.length != 1){
         message = "Missing Diploma File!";
@@ -95,39 +112,67 @@ function submitApplication(){
         message = "Missing Grade Audit File!";
     }else if(selectedProfs.rows.length == 0){
         message = "Missing desired professor(s)!";
-    }else if (researchFields.value.trim() == ""){
+    }else if (researchFields.value.trim() == "") {
         message = "Missing Research Field information!";
     }else {
-        const params = getUrlParams();
-        var desiredProfsUID = [];
-        for (var i = 0; i < selectedProfs.rows.length; i++) {
-            desiredProfsUID.push(selectedProfs.rows[i].value.toString());
+
+        if(!hasLoaded) {
+            var cvPromise = getFilePromise(CVFile.files[0]);
+            cvPromise.then(function (result) {
+                cvBase64 = result;
+            })
+            var diplomaP = getFilePromise(diplomaFile.files[0]);
+            diplomaP.then(function (result) {
+                dpBase64 = result;
+            })
+            var gradeP = getFilePromise(gradeFile.files[0]);
+            gradeP.then(function (result) {
+                gdBase64 = result;
+            })
         }
 
-        $.ajax({
-            url: '/student/'+params.eventUID+'/stdEvent/'+params.stdUID,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                coverLetterFile: CVFile.files[0].name,
-                diplomaFile: diplomaFile.files[0].name,
-                gradeAuditFile: gradeFile.files[0].name,
-                userUID: params.stdUID,
-                eventUID: params.eventUID,
-                desireProfessors: desiredProfsUID.join(),
-                stdFields: researchFields.value.toString(),
-                profcomment: null
-            }),
-            success: function (data) {
-                if (data) {
-                } else
-                    alert("Failed Create Application");
-                },
-            error: function () {
-                console.log('Error ${error}');
-                alert("Post Error!");
+        if (cvBase64 == ""){
+            message = "Waiting for loading CV!";
+        }else if (dpBase64 == ""){
+            message = "Waiting for loading diploma!";
+        }else if (gdBase64 == ""){
+            message = "Waiting for loading grade!";
+        }else {
+            const params = getUrlParams();
+            var desiredProfsUID = [];
+            for (var i = 0; i < selectedProfs.rows.length; i++) {
+                desiredProfsUID.push(selectedProfs.rows[i].value.toString());
             }
-        });
+
+            $.ajax({
+                url: '/student/'+params.eventUID+'/stdEvent/'+params.stdUID,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    coverLetterFile: null,
+                    diplomaFile: null,
+                    gradeAuditFile: null,
+                    userUID: params.stdUID,
+                    eventUID: params.eventUID,
+                    desireProfessors: desiredProfsUID.join(),
+                    stdFields: researchFields.value.toString(),
+                    profcomment: null,
+                    cv64:cvBase64.split(',')[1],
+                    dp64:dpBase64.split(',')[1],
+                    gd64:gdBase64.split(',')[1]
+                }),
+                success: function (data) {
+                    if (data) {
+                    } else
+                        alert("Failed Create Application");
+                },
+                error: function () {
+                    console.log('Error ${error}');
+                    alert("Post Error!");
+                }
+            });
+        }
+
     }
     submitMsgLabel.innerText = message;
 }

@@ -30,7 +30,9 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
             "a.desireProfessors = :desProfs, a.stdFields = :stdFields " +
             "WHERE a.userUID = :stdUID AND a.eventUID = :eventUID")
     void overWriteApplication(@Param("stdUID") Long stdUID, @Param("eventUID") Long eventUID,
-                              @Param("CVFile") String CVFile, @Param("diplomaFile") String diplomaFile, @Param("gradeFile") String gradeFile,
+                              @Param("CVFile") byte[] CVFile, @Param("diplomaFile") byte[] diplomaFile, @Param("gradeFile") byte[] gradeFile,
                               @Param("desProfs") String desProfs, @Param("stdFields") String stdFields);
 
+    @Query("SELECT a FROM Application a WHERE a.applicationUID = :aUID")
+    Application getApplicationByApplicationUID(@Param("aUID") Long aUID);
 }

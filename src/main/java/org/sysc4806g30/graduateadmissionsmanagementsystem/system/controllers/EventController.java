@@ -3,6 +3,7 @@ package org.sysc4806g30.graduateadmissionsmanagementsystem.system.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.requestPackage.FileRequest;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.EventRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfile;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
@@ -69,7 +70,13 @@ public class EventController {
         return eventList;
     }
 
-
+    @PostMapping("/professor/{userUID}/profEvent/{eventUID}")
+    @ResponseBody
+    public String getUserEvents(@PathVariable Long userUID, @PathVariable Long eventUID, @RequestBody FileRequest fileRequest) {
+//        System.out.println("receive type: " + fileRequest.getFileType() + "   student UID: " + fileRequest.getStudentUID());
+        Application application = applicationRepository.getApplicationByStdUIDAndEventUID(fileRequest.getStudentUID(), eventUID);
+        return application.getTargetFileEncode(fileRequest.getFileType());
+    }
 
     @PostMapping("/admin/{uid}")
     @ResponseBody
@@ -102,9 +109,6 @@ public class EventController {
         if (userType.equals("professor")) return "/" + userType + "/" + userUID + "/profEvent/" + eventID;
         return "/" + userType + "/" + userUID + "/" + userType + "Event/" + eventID;
     }
-
-
-
 
     private List<Map<String, Object>> activeEvents() {
         List<Map<String, Object>> activeEventList = new ArrayList<>();

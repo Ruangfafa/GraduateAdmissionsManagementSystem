@@ -101,7 +101,7 @@ public class ApplicationService {
     }
 
 
-    public void saveApplication(Application application) {
+    public void saveApplication(Application application){
         if (application == null) {
             throw new NullPointerException("Application is null");
         }
@@ -146,5 +146,9 @@ public class ApplicationService {
 
     public List<Application> getApplicationsByEventUID(Long eventUID) {
         return applicationRepository.findByEventUID(eventUID);
+    }
+
+    public Application getApplicationByApplicationID(Long applicationID) {
+        return applicationRepository.getApplicationByApplicationUID(applicationID);
     }
 }
