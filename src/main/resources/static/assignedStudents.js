@@ -13,33 +13,36 @@ document.addEventListener("DOMContentLoaded", function () {
 async function fetchAssignedStudents(profUID, eventUID) {
     try {
         const response = await fetch(`/professor/${profUID}/profEvent/${eventUID}/assigned-students`);
-        const studentIds = await response.json();
-        console.log("Fetched students:", studentIds);
+        const applicationInfos = await response.json();
+        console.log("Fetched students:", applicationInfos);
 
         const tableBody = document.getElementById("table-body");
         tableBody.innerHTML = ""; // Clear the table body
 
-        studentIds.forEach(studentId => {
+        // applicationInfos.forEach(studentId => {
+        for (let stdId in applicationInfos) {
             const row = document.createElement("tr");
 
             // Add checkbox
             const selectCell = document.createElement("td");
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-            checkbox.value = studentId;
+            checkbox.value = stdId;
             selectCell.appendChild(checkbox);
             row.appendChild(selectCell);
 
             // Add student ID
             const studentIdCell = document.createElement("td");
-            studentIdCell.textContent = studentId;
+            studentIdCell.textContent = stdId;
             row.appendChild(studentIdCell);
 
             // Add student CV preview button
             const studentCVCell = document.createElement("td");
             const cvButton = document.createElement("button");
             cvButton.textContent = "View CV";
-            cvButton.addEventListener('click', function (){viewFile("cv", studentId);});
+            cvButton.addEventListener('click', function () {
+                viewFile("cv", stdId);
+            });
             studentCVCell.appendChild(cvButton);
             row.appendChild(studentCVCell);
 
@@ -47,7 +50,9 @@ async function fetchAssignedStudents(profUID, eventUID) {
             const studentDiplomaCell = document.createElement("td");
             const diplomaButton = document.createElement("button");
             diplomaButton.textContent = "View Diploma";
-            diplomaButton.addEventListener('click', function (){viewFile("dp", studentId);});
+            diplomaButton.addEventListener('click', function () {
+                viewFile("dp", stdId);
+            });
             studentDiplomaCell.appendChild(diplomaButton);
             row.appendChild(studentDiplomaCell);
 
@@ -55,9 +60,21 @@ async function fetchAssignedStudents(profUID, eventUID) {
             const studentGradeCell = document.createElement("td");
             const gradeButton = document.createElement("button");
             gradeButton.textContent = "View grade";
-            gradeButton.addEventListener('click', function (){viewFile("gd", studentId);});
+            gradeButton.addEventListener('click', function () {
+                viewFile("gd", stdId);
+            });
             studentGradeCell.appendChild(gradeButton);
             row.appendChild(studentGradeCell);
+
+            // Add student desired prof
+            const desiredProf = document.createElement("td");
+            desiredProf.textContent = applicationInfos[stdId][0];
+            row.appendChild(desiredProf);
+
+            // Add student desired prof
+            const researchField = document.createElement("td");
+            researchField.textContent = applicationInfos[stdId][1];
+            row.appendChild(researchField);
 
             // Add evaluation dropdown
             const ratingCell = document.createElement("td");
@@ -83,7 +100,8 @@ async function fetchAssignedStudents(profUID, eventUID) {
             row.appendChild(ratingCell);
 
             tableBody.appendChild(row);
-        });
+            // });
+        }
     } catch (error) {
         console.error("Error fetching assigned students:", error);
     }

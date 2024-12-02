@@ -7,6 +7,7 @@ import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.ProfProfi
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ProfProfileRepository;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.repositories.ApplicationRepository;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.model.User;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
 import java.util.HashMap;
@@ -63,6 +64,28 @@ public class ApplicationService {
 
         // Remove duplicates
         return new ArrayList<>(new HashSet<>(assignedStudents));
+    }
+
+    public HashMap<Long, String[]> getApplicationDetails(Long profUID, Long eventUID) {
+        List<Long> studentsIds = this.getAssignedStudentsForEvent(profUID, eventUID);
+        HashMap<Long, String[]> applicationInfo = new HashMap<>();
+        for (Long studentId : studentsIds) {
+            Application application = applicationRepository.getApplicationByStdUIDAndEventUID(studentId, eventUID);
+            String[] studentInterested = new String[2];
+            // Get prof names in string
+            String desiredProf = application.getDesireProfessors();
+            ArrayList<String> profNames = new ArrayList<>();
+            for (String pUID: desiredProf.split(",")){
+                User prof = userRepository.findById(Long.parseLong(pUID));
+                if (prof != null){
+                    profNames.add(prof.getUserName());
+                }
+            }
+            studentInterested[0] = profNames.toString().substring(1, profNames.toString().length() - 1);
+            studentInterested[1] = application.getStdFields();
+            applicationInfo.put(studentId, studentInterested);
+        }
+        return applicationInfo;
     }
 
     // New method to update profComment by userUID
