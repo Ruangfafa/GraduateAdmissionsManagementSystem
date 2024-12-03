@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.SelectionRateUpdate;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -22,11 +24,19 @@ public class ProfessorController {
         return "applications"; // Points to applications.html in src/main/resources/templates
     }
 
-    // Retrieve assigned students for a specific professor and event as JSON
+//    // Retrieve assigned students for a specific professor and event as JSON
+//    @ResponseBody
+//    @GetMapping("/{profUID}/profEvent/{eventUID}/assigned-students")
+//    public List<Long> getAssignedStudents(@PathVariable Long profUID, @PathVariable Long eventUID) {
+//        return applicationService.getAssignedStudentsForEvent(profUID, eventUID); // Updated service method
+//
+
+    // Retrieve assigned students' application info for a specific professor and event as JSON
     @ResponseBody
     @GetMapping("/{profUID}/profEvent/{eventUID}/assigned-students")
-    public List<Long> getAssignedStudents(@PathVariable Long profUID, @PathVariable Long eventUID) {
-        return applicationService.getAssignedStudentsForEvent(profUID, eventUID); // Updated service method
+    public  HashMap<Long, String[]> getAssignedStudents(@PathVariable Long profUID, @PathVariable Long eventUID) {
+        // {studentUID: [interested prof, research field]}
+        return applicationService.getApplicationDetails(profUID, eventUID);
     }
 
     @PostMapping("/{profUID}/submit-selection")

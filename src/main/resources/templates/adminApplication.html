@@ -17,6 +17,11 @@
     <input type="submit" value="View CV" onclick="viewFile('cv')"><br><br>
     <input type="submit" value="View Diploma" onclick="viewFile('dp')"><br><br>
     <input type="submit" value="View Grade Audit" onclick="viewFile('gd')"><br><br>
+
+    <label for="desiredProfs">Interested Professors:</label>
+    <textarea id="desiredProfs" th:text="${desiredP}" readonly></textarea><br><br>
+    <label for="researchFields">Research Fields:</label>
+    <textarea id="researchFields" th:text="${researchF}" readonly></textarea><br><br>
 </fieldset>
 
 <label for="assignedToProf">Assigned To Prof: </label>

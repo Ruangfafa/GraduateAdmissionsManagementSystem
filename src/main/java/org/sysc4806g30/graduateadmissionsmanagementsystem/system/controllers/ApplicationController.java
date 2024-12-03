@@ -7,13 +7,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.services.ApplicationService;
 import org.sysc4806g30.graduateadmissionsmanagementsystem.system.model.Application;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.model.User;
+import org.sysc4806g30.graduateadmissionsmanagementsystem.users.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
 public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/admin/{userUID}/adminEvent/{eventUID}/adminApp/{applicationUID}")
     public String viewStudentApplication(
@@ -21,6 +26,17 @@ public class ApplicationController {
             @PathVariable Long userUID,
             @PathVariable Long eventUID,
             Model model) {
+        Application application = applicationService.getApplicationByApplicationID(applicationUID);
+        String desiredProf = application.getDesireProfessors();
+        ArrayList<String> profNames = new ArrayList<>();
+        for (String pUID: desiredProf.split(",")){
+            User prof = userRepository.findById(Long.parseLong(pUID));
+            if (prof != null){
+                profNames.add(prof.getUserName());
+            }
+        }
+        model.addAttribute("desiredP", profNames.toString().substring(1, profNames.toString().length() - 1));
+        model.addAttribute("researchF", application.getStdFields());
         return "adminApplication";
     }
 
