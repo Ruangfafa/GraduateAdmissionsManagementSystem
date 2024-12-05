@@ -1,0 +1,168 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Title Container */
+.title-container {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title-container h1 {
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Application Info Container */
+.application-info-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+/* Fieldset Styles */
+fieldset {
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Input Styles */
+input[type="file"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Selected Professors Table */
+#selectedProfs {
+    width: 100%;
+    margin-bottom: 15px;
+    border-collapse: collapse;
+}
+
+#selectedProfs td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Professor Profile Table */
+#profProfileTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#profProfileTable th,
+#profProfileTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+#profProfileTable thead {
+    background-color: #f8f9fa;
+}
+
+#profProfileTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#profProfileTable tr:hover {
+    background-color: #e6e6e6;
+}
+
+/* Submit Button */
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+/* Invalid Message */
+#invalidMessage {
+    color: red;
+    display: block;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    .title-container h1 {
+        font-size: 2em;
+    }
+
+    .application-info-container {
+        padding: 15px;
+    }
+
+    #profProfileTable {
+        font-size: 14px;
+    }
+}
+
+/* Accessibility Focus States */
+input:focus,
+select:focus,
+input[type="submit"]:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
